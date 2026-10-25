@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aparta la Fecha//Invitaciones//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:baby-shower-emma-evangeline-20261220@apartalafecha.github.io
+DTSTAMP:20261025T200000Z
+DTSTART:20261220T190000Z
+DTEND:20261221T000000Z
+SUMMARY:Baby Shower de Emma Evangeline
+LOCATION:Salón de fiestas Casa del Ángel\, Escuadrón 201 #44 local B\, c
+ ol. Cristo Rey\, Álvaro Obregón\, CDMX
+DESCRIPTION:¡Te esperamos! Gustavo y Brenda\nInvitación: https://apartala
+ fecha.github.io/emma-evangeline/
+URL:https://apartalafecha.github.io/emma-evangeline/
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Mañana es el Baby Shower de Emma Evangeline
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -181,6 +181,15 @@ button{font:inherit;color:inherit}
 .btn svg{width:19px;height:19px;flex:none}
 .btn.lleno{background:var(--rosa-hondo);border-color:var(--rosa-hondo);color:#fff}
 .btn.wa{background:var(--wa);border-color:var(--wa);color:#fff;width:100%;min-height:54px;font-size:16px}
+.cal-opciones{width:100%;max-width:380px;display:grid;gap:8px;background:#fff;border:1.5px solid #F6CFDC;border-radius:22px;padding:14px;text-align:left;box-shadow:0 12px 28px -18px rgba(192,79,122,.7)}
+.cal-titulo{font-weight:700;font-size:14px;color:var(--tinta);text-align:center}
+.cal-op{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 14px;border-radius:14px;border:1.5px solid #F3D3DF;color:var(--tinta);text-decoration:none;background:var(--papel)}
+.cal-op:hover{border-color:var(--rosa-hondo)}
+.cal-op b{display:block;font-size:15px}
+.cal-op small{display:block;font-size:12.5px;color:var(--tinta-suave)}
+.punto{width:12px;height:12px;border-radius:50%;flex:none}
+.cal-nota{font-size:12.5px;color:var(--tinta-suave);text-align:center}
+.cal-nota a{color:var(--rosa-hondo);font-weight:700}
 .lugar-nombre{font-family:var(--f-titulo);font-size:24px;color:var(--oro)}
 .direccion{font-size:16px;color:var(--tinta);max-width:32ch}
 
@@ -310,7 +319,14 @@ button{font:inherit;color:inherit}
         <div><b id="cd-s">00</b><span>seg</span></div>
       </div>
       <div class="botones">
-        <a class="btn" id="calendario" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M12 13v5M9.5 15.5h5"/></svg>Agregar a mi calendario</a>
+        <button class="btn" id="calendario" type="button" aria-expanded="false" aria-controls="cal-opciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M12 13v5M9.5 15.5h5"/></svg>Agregar a mi calendario</button>
+      </div>
+      <div class="cal-opciones" id="cal-opciones" hidden>
+        <p class="cal-titulo">¿Qué calendario usas?</p>
+        <a class="cal-op" id="cal-google" target="_blank" rel="noopener"><span class="punto" style="background:#4C8BF5"></span><span><b>Google Calendar</b><small>Android y Gmail</small></span></a>
+        <a class="cal-op" id="cal-apple" href="emma-evangeline.ics"><span class="punto" style="background:#8E8E93"></span><span><b>Calendario de Apple</b><small>iPhone, iPad y Mac</small></span></a>
+        <a class="cal-op" id="cal-outlook" target="_blank" rel="noopener"><span class="punto" style="background:#0F6CBD"></span><span><b>Outlook</b><small>Outlook.com y Hotmail</small></span></a>
+        <p class="cal-nota">¿Usas otro? <a href="emma-evangeline.ics" id="cal-ics">Descarga el archivo del evento</a>; se abre en Outlook de escritorio, Samsung y casi cualquier calendario.</p>
       </div>
     </section>
 
@@ -394,7 +410,12 @@ const EVENTO = {
     + "&text=" + encodeURIComponent("Baby Shower de Emma Evangeline")
     + "&dates=20261220T190000Z/20261221T000000Z"
     + "&location=" + encodeURIComponent("Salón de fiestas Casa del Ángel, Escuadrón 201 #44 local B, col. Cristo Rey, Álvaro Obregón, CDMX")
-    + "&details=" + encodeURIComponent("¡Te esperamos! Gustavo y Brenda")
+    + "&details=" + encodeURIComponent("¡Te esperamos! Gustavo y Brenda\nInvitación: https://apartalafecha.github.io/emma-evangeline/"),
+  outlook: "https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent"
+    + "&subject=" + encodeURIComponent("Baby Shower de Emma Evangeline")
+    + "&startdt=2026-12-20T19:00:00Z&enddt=2026-12-21T00:00:00Z"
+    + "&location=" + encodeURIComponent("Salón de fiestas Casa del Ángel, Escuadrón 201 #44 local B, col. Cristo Rey, Álvaro Obregón, CDMX")
+    + "&body=" + encodeURIComponent("¡Te esperamos! Gustavo y Brenda. Invitación: https://apartalafecha.github.io/emma-evangeline/")
 };
 
 /* ===================== Ilustraciones (SVG originales) ===================== */
@@ -513,7 +534,7 @@ function abrirPagina() {
   window.scrollTo(0, 0);
   setTimeout(() => { portada.hidden = true; revela.hidden = true; }, 1000);
 }
-document.getElementById("seguir").addEventListener("click", abrirPagina);
+document.getElementById("seguir").addEventListener("click", () => { if (!sonando) iniciarMusica(true); abrirPagina(); });
 revela.addEventListener("click", () => { if (revela.classList.contains("activa") && Date.now() - abiertoEn > 2600) abrirPagina(); });
 function chispas() {
   const formas = ["♥", "✿", "❀", "♥", "•"];
@@ -536,10 +557,16 @@ const btnMusica = document.getElementById("musica");
 let sonando = false, pausadaPorOcultar = false;
 cancion.volume = 0.85;
 function marcar(on) { sonando = on; btnMusica.setAttribute("aria-pressed", on ? "true" : "false"); btnMusica.setAttribute("aria-label", on ? "Pausar música" : "Poner música"); }
-function iniciarMusica() {
+function reintentar() {
+  // Si el navegador no dejó arrancar la música, se intenta otra vez con el siguiente toque del invitado.
+  const otraVez = () => { if (!sonando) iniciarMusica(true); };
+  document.addEventListener("pointerdown", otraVez, { once: true });
+  document.addEventListener("keydown", otraVez, { once: true });
+}
+function iniciarMusica(esReintento) {
   const p = cancion.play();
   marcar(true);
-  if (p && p.catch) p.catch(() => marcar(false));
+  if (p && p.catch) p.catch(() => { marcar(false); if (!esReintento) reintentar(); });
 }
 function pararMusica() { cancion.pause(); marcar(false); }
 btnMusica.addEventListener("click", () => { sonando ? pararMusica() : iniciarMusica(); });
@@ -563,7 +590,13 @@ function tic() {
   document.getElementById("cd-s").textContent = String(s).padStart(2, "0");
 }
 tic(); setInterval(tic, 1000);
-document.getElementById("calendario").href = EVENTO.calendario;
+document.getElementById("cal-google").href = EVENTO.calendario;
+document.getElementById("cal-outlook").href = EVENTO.outlook;
+const btnCal = document.getElementById("calendario"), calOp = document.getElementById("cal-opciones");
+btnCal.addEventListener("click", () => {
+  const abrir = calOp.hidden; calOp.hidden = !abrir; btnCal.setAttribute("aria-expanded", String(abrir));
+  if (abrir) calOp.scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
 document.getElementById("mapa").href = EVENTO.mapa;
 document.getElementById("mesa").href = EVENTO.mesa;
 try { new QRCode(document.getElementById("qr"), { text: EVENTO.mesa, width: 360, height: 360, colorDark: "#4A2440", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M }); }
