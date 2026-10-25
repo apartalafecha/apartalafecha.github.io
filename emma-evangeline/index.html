@@ -376,6 +376,7 @@ button{font:inherit;color:inherit}
   </article>
 </main>
 
+<audio id="cancion" src="musica.m4a" preload="auto" loop playsinline></audio>
 <button class="musica" id="musica" type="button" aria-pressed="false" aria-label="Música" hidden>
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/><path class="ondas" d="M2 9c1.2-1 1.2-3 0-4"/></svg>
 </button>
@@ -529,44 +530,25 @@ function chispas() {
   }
 }
 
-/* ===================== Música: «Canción de cuna» de Brahms (dominio público), tipo cajita musical ===================== */
-let ctx = null, sonando = false, timer = null;
+/* ===================== Música: la canción elegida por la familia ===================== */
+const cancion = document.getElementById("cancion");
 const btnMusica = document.getElementById("musica");
-const NOTAS = [ // [nota MIDI, tiempo en pulsos], compás 3/4
-  [76,0],[76,.5],[79,1],[76,3],[76,3.5],[79,4],[76,6],[79,6.5],[84,7],[83,8],[81,9.5],[81,10],[79,11],
-  [74,12],[76,12.5],[77,13],[74,14],[74,15],[76,15.5],[77,16],[74,18],[77,18.5],[83,19],[81,19.5],[79,20],[83,21],[84,22],
-  [72,24],[72,24.5],[84,25],[81,27],[77,27.5],[79,28],[76,30],[72,30.5],[77,31],[79,32],[81,33],[79,34],
-  [72,36],[72,36.5],[84,37],[81,39],[77,39.5],[79,40],[76,42],[72,42.5],[77,43],[76,44],[74,45],[72,46]
-];
-const BAJOS = [[48,1],[48,4],[48,7],[43,10],[43,13],[43,16],[43,19],[48,22],[53,25],[48,28],[53,31],[48,34],[53,37],[48,40],[43,43],[48,46]];
-const PULSO = 0.4, CICLO = 48 * PULSO;
-function nota(midi, t, vol) {
-  const f = 440 * Math.pow(2, (midi - 69) / 12);
-  [1, 2.01, 3.98].forEach((m, i) => {
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = "sine"; o.frequency.value = f * m;
-    const v = [0.15, 0.045, 0.018][i] * vol;
-    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0006, t + 2.4);
-    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t + 2.5);
-  });
-}
-function programar() {
-  const t0 = ctx.currentTime + 0.06;
-  NOTAS.forEach(([m, b]) => nota(m, t0 + b * PULSO, 1));
-  BAJOS.forEach(([m, b]) => nota(m + 12, t0 + b * PULSO, .45));
-  timer = setTimeout(() => { if (sonando) programar(); }, CICLO * 1000);
-}
+let sonando = false, pausadaPorOcultar = false;
+cancion.volume = 0.85;
+function marcar(on) { sonando = on; btnMusica.setAttribute("aria-pressed", on ? "true" : "false"); btnMusica.setAttribute("aria-label", on ? "Pausar música" : "Poner música"); }
 function iniciarMusica() {
-  try {
-    ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === "suspended") ctx.resume();
-    if (!sonando) { sonando = true; programar(); }
-    btnMusica.setAttribute("aria-pressed", "true"); btnMusica.setAttribute("aria-label", "Pausar música");
-  } catch (e) { /* este navegador no tiene audio */ }
+  const p = cancion.play();
+  marcar(true);
+  if (p && p.catch) p.catch(() => marcar(false));
 }
-function pararMusica() { sonando = false; clearTimeout(timer); btnMusica.setAttribute("aria-pressed", "false"); btnMusica.setAttribute("aria-label", "Poner música"); if (ctx) ctx.suspend(); }
+function pararMusica() { cancion.pause(); marcar(false); }
 btnMusica.addEventListener("click", () => { sonando ? pararMusica() : iniciarMusica(); });
-document.addEventListener("visibilitychange", () => { if (document.hidden && sonando) { pararMusica(); } });
+cancion.addEventListener("pause", () => { if (!pausadaPorOcultar) marcar(false); });
+cancion.addEventListener("play", () => marcar(true));
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && sonando) { pausadaPorOcultar = true; cancion.pause(); }
+  else if (!document.hidden && pausadaPorOcultar) { pausadaPorOcultar = false; iniciarMusica(); }
+});
 
 /* ===================== Cuenta regresiva, links y QR ===================== */
 function tic() {
