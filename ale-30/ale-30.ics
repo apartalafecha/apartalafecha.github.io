@@ -5,14 +5,15 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
 UID:ale-30-20261205@apartalafecha.github.io
-DTSTAMP:20261027T060000Z
+DTSTAMP:20261027T180000Z
 DTSTART:20261205T210000Z
 DTEND:20261206T030000Z
 SUMMARY:Cumpleaños 30 de Ale
 LOCATION:Felipe Ángeles #43\, Col. San Lorenzo la Cebada\, 16035\, Xochimi
  lco\, CDMX
 DESCRIPTION:¡Te espero para celebrar mis 30! Código de vestimenta: rosa.\
- nInvitación: https://apartalafecha.github.io/ale-30/
+ nUbicación: https://maps.app.goo.gl/aTXD3bsmUgj7zBuN7\nInvitación: https
+ ://apartalafecha.github.io/ale-30/
 URL:https://apartalafecha.github.io/ale-30/
 BEGIN:VALARM
 ACTION:DISPLAY

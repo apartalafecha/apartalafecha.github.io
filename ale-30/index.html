@@ -319,9 +319,6 @@ textarea{min-height:84px;resize:vertical}
         <input type="radio" name="asiste" id="asiste-si" value="si" checked><label for="asiste-si">Sí, ahí estaré</label>
         <input type="radio" name="asiste" id="asiste-no" value="no"><label for="asiste-no">No podré ir</label>
       </div>
-      <label for="personas" id="lbl-personas">¿Cuántas personas vienen, contándote?
-        <select id="personas" name="personas"></select>
-      </label>
       <label for="mensaje">Un mensaje para Ale (opcional)
         <textarea id="mensaje" name="mensaje" maxlength="400" placeholder="¡Feliz cumpleaños!"></textarea>
       </label>
@@ -359,7 +356,8 @@ const EVENTO = {
   inicioUTC: "20261205T210000Z", finUTC: "20261206T030000Z",
   inicioISO: "2026-12-05T21:00:00Z", finISO: "2026-12-06T03:00:00Z",
   direccion: "Felipe Ángeles #43, Col. San Lorenzo la Cebada, 16035, Xochimilco, CDMX",
-  detalles: "¡Te espero para celebrar mis 30! Código de vestimenta: rosa. Invitación: https://apartalafecha.github.io/ale-30/",
+  detalles: "¡Te espero para celebrar mis 30! Código de vestimenta: rosa. Ubicación: https://maps.app.goo.gl/aTXD3bsmUgj7zBuN7 · Invitación: https://apartalafecha.github.io/ale-30/",
+  mapa: "https://maps.app.goo.gl/aTXD3bsmUgj7zBuN7",
   ics: "https://apartalafecha.github.io/ale-30/ale-30.ics",
   whatsapp: "525579118535"   // Ale: 55 7911 8535
 };
@@ -382,9 +380,6 @@ if (PASES) {
   $("reservados").textContent = PASES === 1 ? "Reservé 1 lugar para ti" : "Reservé " + PASES + " lugares para ti";
   $("reservados").hidden = false;
 }
-const maxP = PASES || 10;
-for (let i = 1; i <= maxP; i++) { const o = document.createElement("option"); o.value = i; o.textContent = i === 1 ? "1 persona" : i + " personas"; $("personas").appendChild(o); }
-$("personas").value = String(PASES || 1);
 
 /* ---- abrir ---- */
 document.body.classList.add("cerrado");
@@ -481,7 +476,7 @@ document.addEventListener("click", e => {
 });
 
 /* ---- mapa ---- */
-$("maps").href = "https://www.google.com/maps/search/?api=1&query=" + enc(EVENTO.direccion);
+$("maps").href = EVENTO.mapa;
 $("waze").href = "https://waze.com/ul?q=" + enc(EVENTO.direccion) + "&navigate=yes";
 function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("si"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("si"), 2200); }
 $("copiar").addEventListener("click", () => {
@@ -501,13 +496,11 @@ $("copiar").addEventListener("click", () => {
 function armar() {
   const nombre = $("nombre").value.trim();
   const si = $("asiste-si").checked;
-  const n = parseInt($("personas").value, 10) || 1;
   const msg = $("mensaje").value.trim();
-  $("lbl-personas").hidden = !si;
   let t;
   const fam = /^familia\b/i.test(nombre);
   const quien = fam ? "Somos la " + nombre + "." : "Soy " + nombre + ".";
-  if (si) t = "¡Hola, Ale! " + quien + " " + (fam ? "Confirmamos que sí vamos" : "Confirmo que sí voy") + " a tu cumpleaños 30 el sábado 5 de diciembre. " + (n === 1 ? "Voy yo." : "Seremos " + n + " personas.");
+  if (si) t = "¡Hola, Ale! " + quien + " " + (fam ? "Confirmamos que sí vamos" : "Confirmo que sí voy") + " a tu cumpleaños 30 el sábado 5 de diciembre.";
   else t = "¡Hola, Ale! " + quien + " Lamentablemente no " + (fam ? "podremos" : "podré") + " acompañarte en tu cumpleaños 30, pero te " + (fam ? "mandamos" : "mando") + " un abrazo enorme.";
   if (msg) t += "\n\n" + msg;
   const num = EVENTO.whatsapp.replace(/\D/g, "");
