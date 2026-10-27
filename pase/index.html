@@ -80,7 +80,7 @@ function jsonp(url) {
 (async () => {
   try {
     if (!window.AF_API || !EV || !C) throw new Error("datos");
-    const d = await jsonp(window.AF_API + "?accion=pase&evento=" + encodeURIComponent(EV) + "&c=" + encodeURIComponent(C));
+    const d = await jsonp(window.AF_API + "?accion=pase&evento=" + encodeURIComponent(EV) + "&codigo=" + encodeURIComponent(C));
     if (!d.ok) throw new Error(d.error);
     document.title = "Pase · " + d.evento.nombre;
     $("evento").textContent = d.evento.nombre;
