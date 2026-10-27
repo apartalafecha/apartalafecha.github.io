@@ -398,6 +398,7 @@ button{font:inherit;color:inherit}
 </button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="../config.js"></script>
 <script>
 /* ===================== Datos del evento ===================== */
 const EVENTO = {
@@ -497,7 +498,8 @@ prado(document.getElementById("pasto-frente"), 160, 70, 29, true);
 /* ===================== Invitación personalizada (?para=...&pases=...) ===================== */
 const qs = new URLSearchParams(location.search);
 const PARA = (qs.get("para") || "").trim().slice(0, 60);
-const PASES = Math.min(20, Math.max(1, parseInt(qs.get("pases"), 10) || 0)) || null;
+const PASES_N = parseInt(qs.get("pases"), 10);
+const PASES = PASES_N > 0 ? Math.min(20, PASES_N) : null;
 if (PARA) {
   const p = document.getElementById("para");
   p.textContent = "Para: " + PARA + (PASES ? " · " + PASES + (PASES === 1 ? " lugar" : " lugares") : "");
@@ -626,8 +628,24 @@ function armar() {
 [nombre, msg].forEach(el => el.addEventListener("input", () => { err.hidden = true; armar(); }));
 document.querySelectorAll('input[name="va"]').forEach(el => el.addEventListener("change", armar));
 enviar.addEventListener("click", e => {
-  if (!nombre.value.trim()) { e.preventDefault(); err.hidden = false; nombre.focus(); }
+  if (!nombre.value.trim()) { e.preventDefault(); err.hidden = false; nombre.focus(); return; }
+  guardarConfirmacion();
 });
+/* Guarda la confirmación en el panel de los papás (si está conectado) antes de abrir WhatsApp */
+function guardarConfirmacion() {
+  const api = window.AF_API;
+  if (!api) return;
+  const va = document.getElementById("r-si").checked;
+  const datos = new URLSearchParams({
+    accion: "confirmar", evento: "emma-evangeline", nombre: nombre.value.trim(),
+    asiste: va ? "si" : "no", personas: va ? personas : 0, mensaje: msg.value.trim(),
+    invitacion: PARA || "", pases: PASES || ""
+  });
+  try {
+    if (!(navigator.sendBeacon && navigator.sendBeacon(api, datos)))
+      fetch(api, { method: "POST", mode: "no-cors", body: datos, keepalive: true });
+  } catch (x) { /* si falla, la confirmación igual llega por WhatsApp */ }
+}
 document.getElementById("rsvp").addEventListener("submit", e => e.preventDefault());
 if (new Date() > EVENTO.limite) document.getElementById("rsvp-sub").textContent = "La fecha para confirmar ya pasó, pero aún puedes avisarnos por WhatsApp.";
 pintarContador();

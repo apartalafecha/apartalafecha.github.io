@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#2F3A2E">
+<title>Panel de Invitados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: banda de encabezado con el nombre del evento, fila de 4 cifras, pestañas Respuestas / Lista de invitados; tabla que se vuelve tarjetas en el celular. Marca Aparta la Fecha (papel, salvia, tinta). */
+:root{
+  --paper:#F4EFE4; --card:#FBF8F1; --ink:#2F3A2E; --soft:#6E7767; --sage:#7C8F72; --sage-soft:#E3E9DC;
+  --clay:#A9523A; --clay-soft:#F3E2DA; --line:#E2D9C6; --ok:#3E6B47; --ok-soft:#DDEBDD; --no:#9A3F2E; --no-soft:#F4DED7;
+  --wait:#8A6A1F; --wait-soft:#F3E9CF; --on:#FFFFFF; --scrim:rgba(30,35,28,.5);
+  --f-display:"Cormorant Garamond",Georgia,serif; --f-body:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#171B16; --card:#20251F; --ink:#ECEFE6; --soft:#A8B2A0; --sage:#A9BC9E; --sage-soft:#2B3528;
+  --clay:#E29A82; --clay-soft:#3A2722; --line:#353C32; --ok:#9CCFA4; --ok-soft:#1F3323; --no:#EBA595; --no-soft:#3B241F;
+  --wait:#E5C878; --wait-soft:#3A3220; --on:#171B16; --scrim:rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#171B16; --card:#20251F; --ink:#ECEFE6; --soft:#A8B2A0; --sage:#A9BC9E; --sage-soft:#2B3528;
+  --clay:#E29A82; --clay-soft:#3A2722; --line:#353C32; --ok:#9CCFA4; --ok-soft:#1F3323; --no:#EBA595; --no-soft:#3B241F;
+  --wait:#E5C878; --wait-soft:#3A3220; --on:#171B16; --scrim:rgba(0,0,0,.6); color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--paper);color:var(--ink)}
+body{margin:0;font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:500}
+p{margin:0}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--clay);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.num{font-variant-numeric:tabular-nums}
+
+.top{background:var(--ink);color:var(--paper)}
+.top .wrap{padding-block:22px 26px;display:grid;gap:6px}
+.marca{font-size:11px;letter-spacing:.28em;text-transform:uppercase;opacity:.75}
+.top h1{font-family:var(--f-display);font-size:clamp(30px,6vw,44px);line-height:1.05;font-weight:600}
+.top .meta{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:13px;opacity:.85}
+.top button{background:transparent;border:1px solid color-mix(in srgb,var(--paper) 40%,transparent);color:var(--paper);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+.aviso{background:var(--wait-soft);color:var(--wait);font-size:13.5px}
+.aviso .wrap{padding-block:10px}
+
+.cifras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:-1px;padding-block:18px}
+@media (max-width:720px){.cifras{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cifra{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:2px;min-width:0}
+.cifra b{font-family:var(--f-display);font-size:38px;line-height:1;font-weight:600}
+.cifra span{font-size:13px;color:var(--soft)}
+.cifra small{font-size:12px;color:var(--soft)}
+.cifra.si b{color:var(--ok)} .cifra.no b{color:var(--no)} .cifra.pend b{color:var(--wait)}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;font-weight:500;color:var(--soft);cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--clay)}
+.tabs .cuenta{font-size:12px;background:var(--sage-soft);color:var(--ink);border-radius:999px;padding:1px 7px;margin-left:4px}
+
+.barra{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.filtros{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--soft)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.buscar{flex:1 1 220px;max-width:320px;min-width:0;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;font-size:15px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 14px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none}
+.btn:hover{border-color:var(--sage)}
+.btn.prim{background:var(--sage);border-color:var(--sage);color:var(--on)}
+.btn svg{width:16px;height:16px}
+
+.tabla{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tabla th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:500;text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+.tabla td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14.5px}
+.tabla tr:last-child td{border-bottom:0}
+.tabla td.c{text-align:center}
+.quien b{display:block;font-weight:500}
+.quien small{color:var(--soft);font-size:12.5px}
+.msg{color:var(--soft);max-width:42ch;overflow-wrap:anywhere}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:500;white-space:nowrap}
+.pill.si{background:var(--ok-soft);color:var(--ok)} .pill.no{background:var(--no-soft);color:var(--no)} .pill.pend{background:var(--wait-soft);color:var(--wait)}
+.cuando{color:var(--soft);font-size:13px;white-space:nowrap}
+@media (max-width:720px){
+  .tabla,.tabla tbody,.tabla tr,.tabla td{display:block;width:100%}
+  .tabla thead{display:none}
+  .tabla{background:none;border:0}
+  .tabla tr{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:grid;grid-template-columns:1fr auto;gap:4px 10px}
+  .tabla td{border:0;padding:0}
+  .tabla td.c{text-align:left}
+  .tabla td[data-l]::before{content:attr(data-l) ": ";color:var(--soft);font-size:12.5px}
+  .tabla td.ancho{grid-column:1/-1}
+}
+.vacio{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:28px 18px;text-align:center;color:var(--soft);display:grid;gap:6px}
+
+.agregar{display:grid;grid-template-columns:minmax(0,1fr) 110px auto;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}
+.agregar input{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:9px 12px;min-width:0;font-size:15px}
+@media (max-width:520px){.agregar{grid-template-columns:1fr 90px}.agregar .btn{grid-column:1/-1;justify-content:center}}
+details.varios{margin-bottom:12px;font-size:14px}
+details.varios summary{cursor:pointer;color:var(--clay);font-weight:500}
+details.varios textarea{width:100%;min-height:110px;margin-top:8px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;font-size:15px}
+.acc{display:flex;flex-wrap:wrap;gap:6px}
+.acc .btn{padding:5px 10px;font-size:13px}
+.guardar{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--ink);color:var(--paper);border-radius:14px;padding:10px 12px 10px 16px;box-shadow:0 10px 30px -12px rgba(0,0,0,.4)}
+.guardar .btn{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.pie{padding-block:28px 40px;color:var(--soft);font-size:12.5px;text-align:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:9px 14px;border-radius:10px;font-size:14px;z-index:20}
+.error{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px 18px;text-align:center;display:grid;gap:8px;margin-block:30px}
+.error h2{font-family:var(--f-display);font-size:28px}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="marca">Aparta la Fecha · Panel de invitados</p>
+    <h1 id="titulo">Cargando…</h1>
+    <div class="meta"><span id="actualizado">Conectando…</span><button type="button" id="recargar">Actualizar</button></div>
+  </div>
+</header>
+<div class="aviso" id="demo" hidden><div class="wrap">Vista de ejemplo con datos ficticios. El panel real de cada evento se abre con su link privado.</div></div>
+
+<main class="wrap" id="app" hidden>
+  <section class="cifras" aria-label="Resumen">
+    <div class="cifra si"><b class="num" id="k-personas">0</b><span>personas confirmadas</span><small id="k-lugares"></small></div>
+    <div class="cifra"><b class="num" id="k-confirmaciones">0</b><span>confirmaciones</span><small>familias o invitados que van</small></div>
+    <div class="cifra no"><b class="num" id="k-no">0</b><span>no asistirán</span><small>avisaron que no pueden</small></div>
+    <div class="cifra pend"><b class="num" id="k-pend">—</b><span>sin responder</span><small id="k-pend-nota">agrega tu lista para verlos</small></div>
+  </section>
+
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" id="t-resp" aria-selected="true" aria-controls="v-resp">Respuestas <span class="cuenta num" id="c-resp">0</span></button>
+    <button type="button" role="tab" id="t-lista" aria-selected="false" aria-controls="v-lista">Lista de invitados <span class="cuenta num" id="c-lista">0</span></button>
+  </div>
+
+  <section id="v-resp" role="tabpanel" aria-labelledby="t-resp">
+    <div class="barra">
+      <div class="filtros" role="group" aria-label="Filtrar respuestas">
+        <button type="button" class="chip" data-f="todos" aria-pressed="true">Todas</button>
+        <button type="button" class="chip" data-f="si" aria-pressed="false">Asisten</button>
+        <button type="button" class="chip" data-f="no" aria-pressed="false">No asisten</button>
+      </div>
+      <input class="buscar" id="buscar" type="search" placeholder="Buscar por nombre o mensaje" aria-label="Buscar">
+      <button type="button" class="btn" id="exportar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/></svg>Descargar Excel</button>
+    </div>
+    <table class="tabla" id="tabla-resp">
+      <thead><tr><th>Invitado</th><th>Respuesta</th><th class="c">Personas</th><th>Mensaje</th><th>Cuándo</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="vacio" id="vacio-resp" hidden><b>Aún no hay respuestas</b><span>Cuando un invitado confirme desde la invitación, aparecerá aquí al momento.</span></div>
+  </section>
+
+  <section id="v-lista" role="tabpanel" aria-labelledby="t-lista" hidden>
+    <p style="color:var(--soft);margin-bottom:12px;max-width:65ch">Agrega a cada familia con sus lugares. Cada una recibe su propio link: la invitación dice su nombre, sus lugares y no deja confirmar a más personas. Aquí ves quién ya respondió.</p>
+    <form class="agregar" id="form-agregar">
+      <label class="vh" for="a-familia" hidden>Familia o invitado</label>
+      <input id="a-familia" aria-label="Familia o invitado" placeholder="Familia o invitado, ej. Familia López" autocomplete="off" required>
+      <label class="vh" for="a-pases" hidden>Lugares</label>
+      <input id="a-pases" type="number" min="1" max="30" value="2" inputmode="numeric" aria-label="Lugares">
+      <button type="submit" class="btn prim">Agregar</button>
+    </form>
+    <details class="varios">
+      <summary>Pegar varios a la vez</summary>
+      <label for="a-varios" style="display:block;margin-top:8px;color:var(--soft)">Uno por renglón, con sus lugares después de una coma: <i>Familia López, 4</i></label>
+      <textarea id="a-varios" placeholder="Familia López, 4&#10;Tía Carmen, 1&#10;Sofía y Daniel, 2"></textarea>
+      <button type="button" class="btn" id="a-varios-btn" style="margin-top:8px">Agregar a la lista</button>
+    </details>
+    <table class="tabla" id="tabla-lista">
+      <thead><tr><th>Familia o invitado</th><th class="c">Lugares</th><th>Estado</th><th>Su invitación</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="vacio" id="vacio-lista" hidden><b>Tu lista está vacía</b><span>Agrega la primera familia arriba para generar su link personalizado.</span></div>
+    <div class="guardar" id="guardar" hidden><span id="guardar-txt">Tienes cambios sin guardar</span><button type="button" class="btn" id="guardar-btn">Guardar lista</button></div>
+  </section>
+</main>
+
+<main class="wrap" id="error" hidden>
+  <div class="error"><h2>No pudimos abrir el panel</h2><p id="error-txt">Abre el panel desde el link privado que te enviamos.</p></div>
+</main>
+
+<p class="pie wrap">Las respuestas llegan en tiempo real desde la invitación · <a href="https://www.instagram.com/apartalafecha.mx/" target="_blank" rel="noopener" style="color:inherit">Aparta la Fecha</a></p>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="../config.js"></script>
+<script>
+const SITIO = "https://apartalafecha.github.io";
+const qs = new URLSearchParams(location.search);
+const EVENTO = (qs.get("evento") || "").toLowerCase().replace(/[^a-z0-9-]/g, "");
+const CLAVE = qs.get("clave") || "";
+const API = window.AF_API || "";
+const DEMO = !API || qs.has("demo");
+let datos = { evento: { id: EVENTO || "emma-evangeline", nombre: "" }, respuestas: [], lista: [] };
+let lista = [], listaSucia = false, filtro = "todos", ultimaCarga = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const norm = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
+function toast(t) { const el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 2600); }
+function hace(iso) {
+  const d = new Date(iso); if (isNaN(d)) return "";
+  const s = (Date.now() - d) / 1000;
+  if (s < 60) return "hace un momento";
+  if (s < 3600) return "hace " + Math.round(s / 60) + " min";
+  if (s < 86400) return "hace " + Math.round(s / 3600) + " h";
+  return d.toLocaleDateString("es-MX", { day: "numeric", month: "short" }) + ", " + d.toLocaleTimeString("es-MX", { hour: "numeric", minute: "2-digit" });
+}
+
+/* ---------- Datos de ejemplo ---------- */
+function demo() {
+  const h = n => new Date(Date.now() - n * 3600e3).toISOString();
+  return {
+    ok: true, evento: { id: "emma-evangeline", nombre: "Baby Shower de Emma Evangeline" },
+    respuestas: [
+      { fecha: h(70), nombre: "Familia Hernández", asiste: "Sí", personas: 4, mensaje: "¡Ahí estaremos! Muchas felicidades 💕", invitacion: "Familia Hernández", pases: 4 },
+      { fecha: h(52), nombre: "Tía Carmen", asiste: "Sí", personas: 1, mensaje: "No me lo pierdo", invitacion: "Tía Carmen", pases: 1 },
+      { fecha: h(30), nombre: "Sofía y Daniel", asiste: "No", personas: 0, mensaje: "Estaremos de viaje, les mandamos un abrazo enorme", invitacion: "Sofía y Daniel", pases: 2 },
+      { fecha: h(20), nombre: "Familia Ruiz Soto", asiste: "Sí", personas: 3, mensaje: "", invitacion: "Familia Ruiz Soto", pases: 4 },
+      { fecha: h(5), nombre: "Mariana López", asiste: "Sí", personas: 2, mensaje: "¡Qué emoción conocer a Emma!", invitacion: "", pases: "" },
+      { fecha: h(1.2), nombre: "Abuelos Martínez", asiste: "Sí", personas: 2, mensaje: "Con todo nuestro amor para nuestra nieta", invitacion: "Abuelos Martínez", pases: 2 }
+    ],
+    lista: [
+      { familia: "Familia Hernández", pases: 4 }, { familia: "Tía Carmen", pases: 1 }, { familia: "Sofía y Daniel", pases: 2 },
+      { familia: "Familia Ruiz Soto", pases: 4 }, { familia: "Abuelos Martínez", pases: 2 }, { familia: "Familia Pérez Gil", pases: 3 },
+      { familia: "Compadres Gómez", pases: 4 }, { familia: "Familia Ortega", pases: 5 }
+    ]
+  };
+}
+
+/* ---------- Conexión con la hoja (JSONP para evitar bloqueos entre sitios) ---------- */
+function jsonp(url) {
+  return new Promise((ok, mal) => {
+    const cb = "af_cb_" + Math.random().toString(36).slice(2);
+    const s = document.createElement("script");
+    const t = setTimeout(() => { limpiar(); mal(new Error("tiempo")); }, 20000);
+    function limpiar() { clearTimeout(t); delete window[cb]; s.remove(); }
+    window[cb] = d => { limpiar(); ok(d); };
+    s.onerror = () => { limpiar(); mal(new Error("red")); };
+    s.src = url + (url.includes("?") ? "&" : "?") + "callback=" + cb;
+    document.head.appendChild(s);
+  });
+}
+async function cargar(silencioso) {
+  if (listaSucia && silencioso) return;   // no pisar cambios sin guardar
+  try {
+    const d = DEMO ? demo() : await jsonp(API + "?accion=panel&evento=" + encodeURIComponent(EVENTO) + "&clave=" + encodeURIComponent(CLAVE));
+    if (!d || !d.ok) throw new Error(d && d.error || "Sin datos");
+    datos = d; ultimaCarga = new Date();
+    if (!listaSucia) lista = (d.lista || []).map(r => ({ familia: r.familia, pases: Number(r.pases) || 1, notas: r.notas || "", agregado: r.agregado || "" }));
+    $("app").hidden = false; $("error").hidden = true;
+    pintar();
+  } catch (e) {
+    if (silencioso && ultimaCarga) { $("actualizado").textContent = "Sin conexión; reintentando…"; return; }
+    $("app").hidden = true; $("error").hidden = false;
+    $("titulo").textContent = "Panel de invitados";
+    $("error-txt").textContent = !EVENTO || !CLAVE ? "Abre el panel desde el link privado que te enviamos." : (String(e.message).includes("válido") ? e.message : "No hay conexión con la lista de confirmaciones. Revisa tu internet y toca Actualizar.");
+    $("actualizado").textContent = "";
+  }
+}
+
+/* ---------- Cálculos ---------- */
+function ultimas() {
+  // Si alguien confirma dos veces, cuenta su respuesta más reciente
+  const m = new Map();
+  [...datos.respuestas].sort((a, b) => new Date(a.fecha) - new Date(b.fecha)).forEach(r => {
+    const k = norm(r.invitacion || r.nombre);
+    const prev = m.get(k);
+    m.set(k, Object.assign({}, r, { cambios: prev ? (prev.cambios || 0) + 1 : 0 }));
+  });
+  return [...m.values()].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+}
+function respuestaDe(fam, resp) {
+  const k = norm(fam);
+  return resp.find(r => norm(r.invitacion) === k) || resp.find(r => norm(r.nombre) === k);
+}
+
+/* ---------- Pintar ---------- */
+function pintar() {
+  document.title = (datos.evento.nombre || "Evento") + " · Panel de invitados";
+  $("titulo").textContent = datos.evento.nombre || "Panel de invitados";
+  $("actualizado").textContent = "Actualizado " + hace(ultimaCarga.toISOString());
+  $("demo").hidden = !DEMO;
+  const resp = ultimas();
+  const si = resp.filter(r => r.asiste === "Sí"), no = resp.filter(r => r.asiste === "No");
+  const personas = si.reduce((s, r) => s + (Number(r.personas) || 0), 0);
+  $("k-personas").textContent = personas;
+  $("k-confirmaciones").textContent = si.length;
+  $("k-no").textContent = no.length;
+  const lugares = lista.reduce((s, r) => s + (Number(r.pases) || 0), 0);
+  $("k-lugares").textContent = lugares ? "de " + lugares + " lugares en tu lista" : "";
+  if (lista.length) {
+    const pend = lista.filter(f => !respuestaDe(f.familia, resp)).length;
+    $("k-pend").textContent = pend; $("k-pend-nota").textContent = "de " + lista.length + " en tu lista";
+  } else { $("k-pend").textContent = "—"; $("k-pend-nota").textContent = "agrega tu lista para verlos"; }
+  $("c-resp").textContent = resp.length; $("c-lista").textContent = lista.length;
+  pintarRespuestas(resp); pintarLista(resp);
+}
+function pintarRespuestas(resp) {
+  const q = norm($("buscar").value);
+  const filas = resp.filter(r => (filtro === "todos" || (filtro === "si" ? r.asiste === "Sí" : r.asiste === "No")) && (!q || norm(r.nombre + " " + r.invitacion + " " + r.mensaje).includes(q)));
+  $("tabla-resp").querySelector("tbody").innerHTML = filas.map(r => `
+    <tr>
+      <td class="quien"><b>${esc(r.nombre)}</b>${r.invitacion && norm(r.invitacion) !== norm(r.nombre) ? `<small>Invitación: ${esc(r.invitacion)}</small>` : ""}${r.cambios ? `<small>Actualizó su respuesta</small>` : ""}</td>
+      <td><span class="pill ${r.asiste === "Sí" ? "si" : "no"}">${r.asiste === "Sí" ? "Asistirá" : "No asistirá"}</span></td>
+      <td class="c num" data-l="Personas">${r.asiste === "Sí" ? r.personas : "—"}</td>
+      <td class="msg ancho">${esc(r.mensaje) || '<span aria-hidden="true">—</span>'}</td>
+      <td class="cuando ancho">${hace(r.fecha)}</td>
+    </tr>`).join("");
+  $("tabla-resp").hidden = !filas.length;
+  $("vacio-resp").hidden = !!filas.length;
+  if (!filas.length && resp.length) $("vacio-resp").innerHTML = "<b>Sin resultados</b><span>Prueba con otro nombre o quita el filtro.</span>";
+  else $("vacio-resp").innerHTML = "<b>Aún no hay respuestas</b><span>Cuando un invitado confirme desde la invitación, aparecerá aquí al momento.</span>";
+}
+function linkDe(f) {
+  return SITIO + "/" + datos.evento.id + "/?para=" + encodeURIComponent(f.familia).replace(/%20/g, "+") + "&pases=" + f.pases;
+}
+function pintarLista(resp) {
+  resp = resp || ultimas();
+  $("tabla-lista").querySelector("tbody").innerHTML = lista.map((f, i) => {
+    const r = respuestaDe(f.familia, resp);
+    const est = !r ? '<span class="pill pend">Sin responder</span>' : r.asiste === "Sí" ? `<span class="pill si">Van ${r.personas} de ${f.pases}</span>` : '<span class="pill no">No asistirán</span>';
+    return `<tr>
+      <td class="quien"><b>${esc(f.familia)}</b></td>
+      <td class="c num" data-l="Lugares">${f.pases}</td>
+      <td>${est}</td>
+      <td class="ancho"><div class="acc">
+        <button type="button" class="btn" data-copiar="${i}">Copiar link</button>
+        <a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent("¡Hola! Te compartimos la invitación al " + (datos.evento.nombre || "evento") + " 💌 " + linkDe(f))}">Enviar por WhatsApp</a>
+        <button type="button" class="btn" data-quitar="${i}" aria-label="Quitar a ${esc(f.familia)}">Quitar</button>
+      </div></td>
+    </tr>`;
+  }).join("");
+  $("tabla-lista").hidden = !lista.length;
+  $("vacio-lista").hidden = !!lista.length;
+  $("guardar").hidden = !listaSucia;
+}
+
+/* ---------- Lista de invitados ---------- */
+function agregar(familia, pases) {
+  familia = String(familia || "").replace(/\s+/g, " ").trim().slice(0, 80);
+  if (!familia) return false;
+  if (lista.some(f => norm(f.familia) === norm(familia))) { toast(familia + " ya está en tu lista"); return false; }
+  lista.push({ familia, pases: Math.max(1, Math.min(30, parseInt(pases, 10) || 1)), notas: "", agregado: new Date().toISOString() });
+  listaSucia = true; return true;
+}
+$("form-agregar").addEventListener("submit", e => {
+  e.preventDefault();
+  if (agregar($("a-familia").value, $("a-pases").value)) { $("a-familia").value = ""; $("a-familia").focus(); pintar(); }
+});
+$("a-varios-btn").addEventListener("click", () => {
+  let n = 0;
+  $("a-varios").value.split(/\n/).forEach(l => { const m = l.match(/^(.*?)(?:[,;\t]\s*(\d+))?\s*$/); if (m && agregar(m[1], m[2] || 1)) n++; });
+  if (n) { $("a-varios").value = ""; toast(n + (n === 1 ? " invitado agregado" : " invitados agregados")); pintar(); }
+});
+$("tabla-lista").addEventListener("click", e => {
+  const c = e.target.closest("[data-copiar]"), q = e.target.closest("[data-quitar]");
+  if (c) {
+    const link = linkDe(lista[+c.dataset.copiar]);
+    try { navigator.clipboard.writeText(link).then(() => toast("Link copiado"), () => prompt("Copia el link:", link)); }
+    catch (x) { toast(link); }
+  }
+  if (q) { lista.splice(+q.dataset.quitar, 1); listaSucia = true; pintar(); }
+});
+$("guardar-btn").addEventListener("click", async () => {
+  if (DEMO) { listaSucia = false; pintar(); toast("En la vista de ejemplo la lista no se guarda"); return; }
+  $("guardar-btn").disabled = true; $("guardar-txt").textContent = "Guardando…";
+  try {
+    await fetch(API, { method: "POST", mode: "no-cors", body: new URLSearchParams({ accion: "lista", evento: EVENTO, clave: CLAVE, lista: JSON.stringify(lista) }) });
+    listaSucia = false;
+    setTimeout(() => cargar().then(() => toast("Lista guardada")), 1500);
+  } catch (x) {
+    $("guardar-txt").textContent = "No se pudo guardar; revisa tu conexión e intenta de nuevo";
+  } finally { $("guardar-btn").disabled = false; }
+});
+window.addEventListener("beforeunload", e => { if (listaSucia) { e.preventDefault(); e.returnValue = ""; } });
+
+/* ---------- Pestañas, filtros, exportar ---------- */
+function tab(cual) {
+  ["resp", "lista"].forEach(t => { $("t-" + t).setAttribute("aria-selected", String(t === cual)); $("v-" + t).hidden = t !== cual; });
+}
+$("t-resp").addEventListener("click", () => tab("resp"));
+$("t-lista").addEventListener("click", () => tab("lista"));
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+  filtro = b.dataset.f; document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === b))); pintarRespuestas(ultimas());
+}));
+$("buscar").addEventListener("input", () => pintarRespuestas(ultimas()));
+$("exportar").addEventListener("click", () => {
+  if (DEMO) { toast("En la vista de ejemplo no se descarga; en el panel real baja un archivo para Excel"); return; }
+  const resp = ultimas();
+  const filas = [["Invitado", "Invitación", "Respuesta", "Personas", "Mensaje", "Fecha"]].concat(
+    resp.map(r => [r.nombre, r.invitacion, r.asiste === "Sí" ? "Asistirá" : "No asistirá", r.asiste === "Sí" ? r.personas : 0, r.mensaje, new Date(r.fecha).toLocaleString("es-MX")]));
+  if (lista.length) {
+    filas.push([], ["Sin responder", "", "", "Lugares", "", ""]);
+    lista.filter(f => !respuestaDe(f.familia, resp)).forEach(f => filas.push([f.familia, "", "Sin responder", f.pases, "", ""]));
+  }
+  const csv = "﻿" + filas.map(f => f.map(v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"').join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = (datos.evento.id || "invitados") + "-confirmaciones.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  toast("Descargando la lista…");
+});
+$("recargar").addEventListener("click", () => { $("actualizado").textContent = "Actualizando…"; cargar(); });
+
+cargar();
+setInterval(() => { if (!document.hidden) cargar(true); }, 45000);
+setInterval(() => { if (ultimaCarga) $("actualizado").textContent = "Actualizado " + hace(ultimaCarga.toISOString()); }, 20000);
+</script>
+
+</body>
+</html>
