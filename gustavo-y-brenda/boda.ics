@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aparta la Fecha//Invitaciones//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:gustavo-y-brenda-20250606@apartalafecha.github.io
+DTSTAMP:20261028T180000Z
+DTSTART:20250606T230000Z
+DTEND:20250607T070000Z
+SUMMARY:Boda de Gustavo & Brenda
+LOCATION:Jardín Hacienda Tezontle 2\, C. Escobillera 20\, CEDA\, Iztapalap
+ a\, 09040\, Ciudad de México
+GEO:19.3810355;-99.0779321
+DESCRIPTION:¡Nos casamos! Ceremonia simbólica 5:00 p.m.\, cóctel 6:00\, 
+ recepción 7:00\, primer baile 8:30.\nCódigo de vestimenta: formal.\nUbic
+ ación: https://maps.app.goo.gl/PHVpbcz6LDGtx4s17\nInvitación: https://ap
+ artalafecha.github.io/gustavo-y-brenda/
+URL:https://apartalafecha.github.io/gustavo-y-brenda/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana es la boda de Gustavo & Brenda
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR
