@@ -536,12 +536,16 @@ function pintar() {
 function pintarResumen(resp) {
   const si = resp.filter(r => r.asiste === "Sí"), no = resp.filter(r => r.asiste === "No");
   const personas = si.reduce((s, r) => s + (Number(r.personas) || 0), 0);
-  const lugares = lista.reduce((s, f) => s + f.pases, 0);
+  /* Respuestas de invitaciones por número de pases (?pases=N) que no están en la lista: cuentan como su propia invitación */
+  const sueltas = resp.filter(r => Number(r.pases) > 0 && !lista.some(f => norm(f.familia) === norm(r.invitacion || r.nombre)));
+  const nInv = lista.length + sueltas.length;
+  const lugares = lista.reduce((s, f) => s + f.pases, 0) + sueltas.reduce((s, r) => s + Number(r.pases), 0);
   const pend = lista.filter(f => !respDe(f.familia, resp));
   const lugPend = pend.reduce((s, f) => s + f.pases, 0);
-  const lugNo = lista.filter(f => { const r = respDe(f.familia, resp); return r && r.asiste === "No"; }).reduce((s, f) => s + f.pases, 0);
-  $("k-invitados").textContent = lista.length ? lugares : resp.length;
-  $("k-invitados-t").textContent = lista.length ? "lugares en " + lista.length + (lista.length === 1 ? " invitación" : " invitaciones") : "respuestas recibidas";
+  const lugNo = lista.filter(f => { const r = respDe(f.familia, resp); return r && r.asiste === "No"; }).reduce((s, f) => s + f.pases, 0)
+    + sueltas.filter(r => r.asiste === "No").reduce((s, r) => s + Number(r.pases), 0);
+  $("k-invitados").textContent = nInv ? lugares : resp.length;
+  $("k-invitados-t").textContent = nInv ? "lugares en " + nInv + (nInv === 1 ? " invitación" : " invitaciones") : "respuestas recibidas";
   $("k-personas").textContent = personas; $("k-no").textContent = no.length; $("k-pend").textContent = lista.length ? pend.length : "—";
   // Pases
   const tot = Math.max(lugares, personas + lugNo + lugPend, 1);
@@ -636,7 +640,7 @@ function pintarInvitados(resp) {
     $("tabla-resp").querySelector("tbody").innerHTML = filas.map(r => {
       const enLista = lista.some(f => norm(f.familia) === norm(r.invitacion || r.nombre));
       return `<tr>
-      <td class="quien"><b>${esc(r.nombre)}</b>${r.invitacion && norm(r.invitacion) !== norm(r.nombre) ? `<small>Invitación: ${esc(r.invitacion)}</small>` : ""}${r.cambios ? `<small>Actualizó su respuesta</small>` : ""}${!enLista ? `<small><button type="button" class="lnk" data-alista="${esc(r.nombre)}" data-p="${r.personas || 1}">Agregar a la lista</button></small>` : ""}</td>
+      <td class="quien"><b>${esc(r.nombre)}</b>${r.invitacion && norm(r.invitacion) !== norm(r.nombre) ? `<small>Invitación: ${esc(r.invitacion)}</small>` : ""}${!r.invitacion && Number(r.pases) > 0 ? `<small>Invitación de ${Number(r.pases)} ${Number(r.pases) === 1 ? "pase" : "pases"}</small>` : ""}${r.cambios ? `<small>Actualizó su respuesta</small>` : ""}${!enLista ? `<small><button type="button" class="lnk" data-alista="${esc(r.nombre)}" data-p="${Number(r.pases) || r.personas || 1}">Agregar a la lista</button></small>` : ""}</td>
       <td><span class="pill ${r.asiste === "Sí" ? "si" : "no"}">${r.asiste === "Sí" ? "Asistirá" : "No asistirá"}</span></td>
       <td class="c num" data-l="Personas">${r.asiste === "Sí" ? r.personas : "—"}</td>
       <td class="msg ancho">${esc(r.mensaje) || "—"}</td>
@@ -672,7 +676,7 @@ $("exportar").addEventListener("click", () => {
   const resp = ultimas();
   const filas = [["Invitado", "Invitación", "Respuesta", "Personas", "Mesa", "Mensaje", "Fecha"]].concat(resp.map(r => {
     const f = lista.find(x => norm(x.familia) === norm(r.invitacion || r.nombre));
-    return [r.nombre, r.invitacion, r.asiste === "Sí" ? "Asistirá" : "No asistirá", r.asiste === "Sí" ? r.personas : 0, f ? f.mesa : "", r.mensaje, new Date(r.fecha).toLocaleString("es-MX")];
+    return [r.nombre, r.invitacion || (Number(r.pases) > 0 ? "Invitación de " + Number(r.pases) + (Number(r.pases) === 1 ? " pase" : " pases") : ""), r.asiste === "Sí" ? "Asistirá" : "No asistirá", r.asiste === "Sí" ? r.personas : 0, f ? f.mesa : "", r.mensaje, new Date(r.fecha).toLocaleString("es-MX")];
   }));
   if (lista.length) { filas.push([], ["Sin responder", "", "", "Lugares", "Mesa", "", ""]); lista.filter(f => !respDe(f.familia, resp)).forEach(f => filas.push([f.familia, "", "Sin responder", f.pases, f.mesa, "", ""])); }
   descargar((D.evento.id || "invitados") + "-confirmaciones.csv", "﻿" + filas.map(f => f.map(v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"').join(",")).join("\r\n"), "text/csv;charset=utf-8");
