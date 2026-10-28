@@ -507,6 +507,13 @@ if (PARA) {
   const pp = document.getElementById("para-portada");
   pp.textContent = "Para " + PARA; pp.hidden = false;
   document.getElementById("r-nombre").value = PARA;
+} else if (PASES) {
+  /* Invitación solo con número de pases (?pases=N) */
+  const lug = PASES + (PASES === 1 ? " persona" : " personas");
+  const p = document.getElementById("para");
+  p.textContent = "Invitación para " + lug; p.hidden = false;
+  const pp = document.getElementById("para-portada");
+  pp.textContent = "Válida para " + lug; pp.hidden = false;
 }
 
 /* ===================== Escenas ===================== */
@@ -622,6 +629,7 @@ function armar() {
     ? "Confirmo que " + (personas === 1 ? "asistiré" : "asistiremos " + personas + " personas") + " al Baby Shower de Emma Evangeline el domingo 20 de diciembre a la 1:00 p.m. 💕"
     : "No podré asistir al Baby Shower de Emma Evangeline, pero les mando mucho cariño. 💕";
   if (PARA && PARA !== quien) t += "\n(Invitación: " + PARA + ")";
+  else if (!PARA && PASES) t += "\n(Invitación para " + PASES + (PASES === 1 ? " persona)" : " personas)");
   if (msg.value.trim()) t += "\n\nMensaje para Emma: " + msg.value.trim();
   enviar.href = "https://wa.me/" + EVENTO.whatsapp + "?text=" + encodeURIComponent(t);
 }
