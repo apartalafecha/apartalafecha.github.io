@@ -431,6 +431,13 @@ if (PARA) {
   $("para-chip").hidden = false;
   $("nombre").value = PARA;
 }
+if (!PARA && PASES) {
+  /* Gala Pases: invitación solo con número de pases (?pases=N) */
+  const lug = PASES + (PASES === 1 ? " persona" : " personas");
+  $("sobre-para").textContent = "Válida para " + lug;
+  $("para-chip").textContent = "Invitación para " + lug;
+  $("para-chip").hidden = false;
+}
 if (PASES) {
   $("reservados").innerHTML = "Reservamos <b>" + PASES + "</b> " + (PASES === 1 ? "lugar" : "lugares") + " para ti";
   $("reservados").hidden = false;
@@ -552,6 +559,7 @@ function armar() {
   let t = si
     ? "¡Hola, Gustavo y Brenda! " + quien + " " + (fam ? "Confirmamos" : "Confirmo") + " asistencia a su boda el 6 de junio. " + (n === 1 ? "Asistiré yo." : "Seremos " + n + " personas.")
     : "¡Hola, Gustavo y Brenda! " + quien + " Lamentablemente no " + (fam ? "podremos" : "podré") + " acompañarlos en su boda, pero les " + (fam ? "deseamos" : "deseo") + " lo mejor.";
+  if (!PARA && PASES) t += "\n(Invitación para " + PASES + (PASES === 1 ? " persona)" : " personas)");
   if (msg) t += "\n\n" + msg;
   const listo = nombre.length >= 2;
   const a = $("enviar");
