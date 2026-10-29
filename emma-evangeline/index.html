@@ -222,6 +222,11 @@ button{font:inherit;color:inherit}
 .contador output{font-family:var(--f-nombre);font-weight:600;font-size:28px;min-width:32px;text-align:center;color:var(--tinta);font-variant-numeric:tabular-nums}
 .contador small{color:var(--tinta-suave);font-size:13px}
 .error{color:#B3261E;font-weight:700;font-size:14px}
+.paso2{display:grid;gap:10px;padding:14px;border-radius:18px;background:var(--rosa-tenue);border:1.5px dashed #E9A9C0;text-align:center}
+.paso2 p{margin:0;font-size:15px;color:var(--tinta)}
+.paso2 p b{color:var(--rosa-hondo)}
+.paso2.listo{border-style:solid;background:#fff}
+.nota b{white-space:nowrap}
 .nota{font-size:14px;color:var(--tinta-suave);text-align:center}
 .nota b{color:var(--tinta);user-select:all}
 
@@ -379,7 +384,11 @@ button{font:inherit;color:inherit}
         </div>
         <p class="error" id="r-error" role="alert" hidden>Escribe tu nombre para poder confirmar.</p>
         <a class="btn wa" id="enviar" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3Z"/></svg>Confirmar por WhatsApp</a>
-        <p class="nota">Se abre WhatsApp con tu mensaje listo; solo toca enviar. También puedes escribir al <b>55 4024 2604</b>.</p>
+        <div class="paso2" id="paso2" hidden aria-live="polite">
+          <p id="paso2-txt"><b>¡Falta un paso!</b> Mándale tu confirmación también a Brenda.</p>
+          <a class="btn wa" id="enviar-2" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3Z"/></svg>Enviar también a Brenda</a>
+        </div>
+        <p class="nota">Se abre WhatsApp con tu mensaje listo; solo toca enviar. También puedes escribir a Gustavo al <b>55 4024 2604</b> o a Brenda al <b>55 2352 7302</b>.</p>
       </form>
     </section>
 
@@ -405,6 +414,7 @@ const EVENTO = {
   inicio: new Date("2026-12-20T13:00:00-06:00"),
   limite: new Date("2026-12-01T23:59:59-06:00"),
   whatsapp: "525540242604",
+  whatsapp2: "525523527302",   /* Brenda: recibe la misma confirmación en un segundo toque */
   mesa: "https://apartalafecha.github.io/emma-evangeline/mesa/",
   mapa: "https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n%20de%20Fiestas%20Casa%20%C3%81ngel%2C%20Escuadr%C3%B3n%20201%2044-Loc%20B%2C%20Col.%20Cristo%20Rey%2C%20Ciudad%20de%20M%C3%A9xico&query_place_id=ChIJYahfAc4B0oURfNdooTSeI-s",
   calendario: "https://calendar.google.com/calendar/render?action=TEMPLATE"
@@ -620,6 +630,7 @@ function pintarContador() { out.textContent = personas; menos.disabled = persona
 menos.addEventListener("click", () => { if (personas > 1) { personas--; pintarContador(); } });
 mas.addEventListener("click", () => { if (personas < MAX) { personas++; pintarContador(); } });
 const nombre = document.getElementById("r-nombre"), msg = document.getElementById("r-msg"), enviar = document.getElementById("enviar"), err = document.getElementById("r-error");
+const enviar2 = document.getElementById("enviar-2"), paso2 = document.getElementById("paso2");
 function armar() {
   const va = document.getElementById("r-si").checked;
   document.getElementById("campo-personas").hidden = !va;
@@ -632,12 +643,20 @@ function armar() {
   else if (!PARA && PASES) t += "\n(Invitación para " + PASES + (PASES === 1 ? " persona)" : " personas)");
   if (msg.value.trim()) t += "\n\nMensaje para Emma: " + msg.value.trim();
   enviar.href = "https://wa.me/" + EVENTO.whatsapp + "?text=" + encodeURIComponent(t);
+  enviar2.href = "https://wa.me/" + EVENTO.whatsapp2 + "?text=" + encodeURIComponent(t);
 }
 [nombre, msg].forEach(el => el.addEventListener("input", () => { err.hidden = true; armar(); }));
 document.querySelectorAll('input[name="va"]').forEach(el => el.addEventListener("change", armar));
 enviar.addEventListener("click", e => {
   if (!nombre.value.trim()) { e.preventDefault(); err.hidden = false; nombre.focus(); return; }
   guardarConfirmacion();
+  paso2.classList.remove("listo"); enviar2.hidden = false;
+  document.getElementById("paso2-txt").innerHTML = "<b>¡Falta un paso!</b> Mándale tu confirmación también a Brenda.";
+  paso2.hidden = false;
+});
+enviar2.addEventListener("click", () => {
+  paso2.classList.add("listo"); enviar2.hidden = true;
+  document.getElementById("paso2-txt").innerHTML = "<b>¡Listo!</b> Gustavo y Brenda ya tienen tu confirmación. 💕";
 });
 /* Guarda la confirmación en el panel de los papás (si está conectado) antes de abrir WhatsApp */
 function guardarConfirmacion() {
