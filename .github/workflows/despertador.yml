@@ -1,0 +1,12 @@
+name: Mantener activa la base de las mesas
+# El plan gratuito pausa la base tras una semana sin uso. Esta consulta cada 2 días la mantiene despierta.
+on:
+  schedule:
+    - cron: "23 14 */2 * *"
+  workflow_dispatch:
+jobs:
+  despertar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar la base
+        run: curl -fsS "https://qbwccqawmilxtzxfuitc.supabase.co/rest/v1/mesas?select=slug&limit=1" -H "apikey: sb_publishable_ExXsLheZKY0L83nKZ6Ubmw_WMt5Eh8l" -o /dev/null
