@@ -9,4 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Consultar la base
-        run: curl -fsS "https://qbwccqawmilxtzxfuitc.supabase.co/rest/v1/mesas?select=slug&limit=1" -H "apikey: sb_publishable_ExXsLheZKY0L83nKZ6Ubmw_WMt5Eh8l" -o /dev/null
+        run: |
+          curl -fsS "https://qbwccqawmilxtzxfuitc.supabase.co/rest/v1/mesas?select=slug&limit=1" -H "apikey: sb_publishable_ExXsLheZKY0L83nKZ6Ubmw_WMt5Eh8l" -o /dev/null
