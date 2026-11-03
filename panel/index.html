@@ -9,7 +9,30 @@
 <title>Panel de Invitados</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500;600&display=swap">
+<script>
+/* ===================== Temas por evento =====================
+   El panel es el mismo para todos los eventos. Si el evento tiene tema aquí,
+   se pinta con el estilo de su invitación (siempre claro); si no, queda el estilo general. */
+window.AF_TEMAS = {
+  "emma-evangeline": {
+    clase: "tema-rosa", color: "#FFF6F8", qr: "#C04F7A",
+    fuentes: "family=Bree+Serif&family=Fredoka:wght@600&family=Poiret+One&family=Quicksand:wght@500;600;700&family=Sacramento",
+    pre: "BABY SHOWER", nombre: "EMMA EVANGELINE"
+  }
+};
+(function () {
+  var ev = (new URLSearchParams(location.search).get("evento") || "").toLowerCase().replace(/[^a-z0-9-]/g, "");
+  var t = window.AF_TEMAS[ev];
+  var f = t ? t.fuentes : "family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500;600";
+  document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?' + f + '&display=swap">');
+  if (t) {
+    document.documentElement.className = t.clase;
+    document.documentElement.setAttribute("data-theme", "light");
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", t.color);
+  }
+  window.AF_TEMA = t || null;
+})();
+</script>
 <style>
 /* Layout: banda de encabezado con el evento y cuenta regresiva; pestañas Resumen · Invitados · Mesas · Mensajes · Fotos · Registro.
    Resumen = tablero de tarjetas (cifras, pases, ocupación, actividad, tendencia, recordatorios). Marca Aparta la Fecha. */
@@ -209,18 +232,108 @@ details.varios textarea{width:100%;min-height:110px;margin-top:8px;border:1px so
 .error{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px 18px;text-align:center;display:grid;gap:8px;margin-block:30px}
 .error h2{font-family:var(--f-display);font-size:28px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ===================== Tema rosa (estilo de la invitación de Emma) ===================== */
+.cielo,.t-dino,.t-pre{display:none}
+:root.tema-rosa{color-scheme:light;
+  --paper:#FFF6F8; --card:#FFFFFF; --ink:#4E3442; --soft:#7D6371; --sage:#C04F7A; --sage-soft:#FCE3EC;
+  --clay:#C04F7A; --clay-soft:#FCE3EC; --line:#F6CFDC; --ok:#1F7A4D; --ok-soft:#EAF2E0; --no:#B3261E; --no-soft:#FBE4E1;
+  --wait:#8A7425; --wait-soft:#F6EED3; --on:#FFFFFF; --scrim:rgba(78,52,66,.5); --mapa:#FFF0F4;
+  --rosa:#EC86A8; --hondo:#C04F7A; --tenue:#FCE3EC; --oro:#8A7425;
+  --f-display:"Bree Serif",Georgia,serif; --f-body:"Quicksand",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-nombre:"Fredoka","Arial Rounded MT Bold",system-ui,sans-serif; --f-deco:"Poiret One","Quicksand",system-ui,sans-serif; --f-guion:"Sacramento",cursive}
+.tema-rosa body{font-weight:500;overflow-x:hidden;
+  background:
+    radial-gradient(closest-side,rgba(249,204,218,.55),transparent) calc(100% + 200px) 420px/480px 440px no-repeat,
+    radial-gradient(closest-side,rgba(249,204,218,.45),transparent) -200px 900px/460px 420px no-repeat,
+    radial-gradient(circle,#EF8FB0 1.3px,transparent 1.9px) 30px 40px/190px 230px,
+    radial-gradient(circle,#E9A4BC 1.6px,transparent 2.2px) 160px 120px/260px 310px,
+    var(--paper)}
+/* Encabezado claro con nubes, mariposas y dino */
+.tema-rosa .top{position:relative;overflow:hidden;color:var(--ink);
+  background:radial-gradient(closest-side,rgba(248,195,213,.9),rgba(251,217,228,.5) 55%,transparent) -160px -120px/520px 380px no-repeat,
+    radial-gradient(closest-side,rgba(249,204,218,.8),transparent) calc(100% + 120px) 10px/440px 300px no-repeat,
+    linear-gradient(#FFFDFB,#FFF3F7);border-bottom:1.5px solid var(--line)}
+.tema-rosa .top .wrap{position:relative;z-index:1;padding-block:26px 24px;align-items:center}
+.tema-rosa .cielo{display:block;position:absolute;inset:0;pointer-events:none}
+.tema-rosa .cielo img{position:absolute;height:auto}
+.tema-rosa .cielo .nube{width:170px;left:-40px;top:-6px;opacity:.85;-webkit-mask-image:linear-gradient(#000 55%,transparent 98%);mask-image:linear-gradient(#000 55%,transparent 98%);animation:flota 9s ease-in-out infinite}
+.tema-rosa .cielo .nube.n2{width:130px;left:auto;right:-30px;top:auto;bottom:-10px;opacity:.7;animation-delay:-4s}
+.tema-rosa .cielo .mariposa{width:30px;left:auto;right:5%;top:58px;animation:aleteo 3.2s ease-in-out infinite}
+.tema-rosa .cielo .mariposa.m2{width:26px;left:auto;right:30%;top:auto;bottom:16px;animation-delay:-1.4s}
+@keyframes flota{50%{transform:translateX(12px)}}
+@keyframes aleteo{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-7px) rotate(8deg)}}
+.tema-rosa .marca{font-family:var(--f-deco);letter-spacing:.3em;font-size:12px;color:var(--oro);opacity:1;text-transform:uppercase}
+.tema-rosa .t-pre{display:block;font-family:var(--f-deco);font-size:clamp(22px,4.6vw,30px);letter-spacing:.06em;color:var(--oro);line-height:1.1;margin-top:4px}
+.tema-rosa .top h1{font-family:var(--f-nombre);font-weight:600;color:var(--rosa);font-size:clamp(34px,7.4vw,56px);line-height:1.02;letter-spacing:.02em;
+  text-shadow:0 2px 0 #fff,0 3px 0 #F6BBCD,0 6px 14px rgba(236,134,168,.25)}
+.tema-rosa .top .meta{opacity:1;color:var(--soft);font-size:13.5px}
+.tema-rosa .top .meta button{border:1.5px solid #F2BCCF;color:var(--hondo);background:#fff;font-weight:700}
+.tema-rosa .der{display:flex;align-items:flex-end;gap:6px}
+.tema-rosa .t-dino{display:block;width:92px;height:auto;margin-bottom:-6px;animation:respira 3.4s ease-in-out infinite}
+@keyframes respira{50%{transform:scale(1.03) translateY(-2px)}}
+.tema-rosa .faltan{background:#fff;border:1.5px solid var(--line);border-radius:22px;box-shadow:0 12px 26px -18px rgba(192,79,122,.7);color:var(--ink)}
+.tema-rosa .faltan small{font-family:var(--f-deco);letter-spacing:.24em;color:var(--oro);opacity:1}
+.tema-rosa .faltan b{font-family:var(--f-nombre);color:var(--hondo)}
+@media (max-width:560px){.tema-rosa .t-dino{width:70px}.tema-rosa .faltan{padding:8px 14px;min-width:92px}.tema-rosa .faltan b{font-size:36px}}
+/* Pestañas, tarjetas y botones */
+.tema-rosa .tabs-wrap{background:rgba(255,246,248,.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-bottom:1.5px solid var(--line)}
+.tema-rosa .tabs button{font-weight:600}
+.tema-rosa .tabs button[aria-selected="true"]{color:var(--hondo);border-bottom-width:3px}
+.tema-rosa .tabs .cuenta{background:var(--tenue);color:var(--hondo);font-weight:700}
+.tema-rosa .cifra,.tema-rosa .tarjeta,.tema-rosa .mensaje,.tema-rosa .fotos-top,.tema-rosa .agregar,.tema-rosa .error{border:1.5px solid var(--line);border-radius:20px;box-shadow:0 12px 26px -20px rgba(192,79,122,.55)}
+.tema-rosa .cifra b{font-family:var(--f-nombre);font-weight:600}
+.tema-rosa .cifra:not(.si):not(.no):not(.pend) b{color:var(--hondo)}
+.tema-rosa .tarjeta h2{font-family:var(--f-deco);letter-spacing:.2em;color:var(--oro);font-size:12.5px;font-weight:400}
+.tema-rosa .grande{font-family:var(--f-nombre);color:var(--ink)}
+.tema-rosa .tabla{border:1.5px solid var(--line);border-radius:18px}
+.tema-rosa .tabla th{color:var(--oro);font-weight:700}
+.tema-rosa .vacio{border:1.5px dashed #EBA7BF;border-radius:20px;background:#fff}
+.tema-rosa .btn{border-radius:999px;border:1.5px solid #F2BCCF;color:var(--hondo);background:#fff;font-weight:700;padding:8px 16px}
+.tema-rosa .btn:hover{border-color:var(--hondo)}
+.tema-rosa .btn.prim{background:var(--hondo);border-color:var(--hondo);color:#fff;box-shadow:0 8px 18px -12px rgba(192,79,122,.9)}
+.tema-rosa .chip{border:1.5px solid var(--line);background:#fff;font-weight:600}
+.tema-rosa .chip[aria-pressed="true"]{background:var(--hondo);border-color:var(--hondo);color:#fff}
+.tema-rosa .buscar,.tema-rosa .agregar input,.tema-rosa .mesa-edit input,.tema-rosa .mesa-edit select,.tema-rosa details.varios textarea,.tema-rosa .sel{border:1.5px solid #EFC9D7;background:#fff;border-radius:14px}
+.tema-rosa .buscar:focus,.tema-rosa .agregar input:focus,.tema-rosa details.varios textarea:focus{outline:none;border-color:var(--hondo);box-shadow:0 0 0 4px var(--tenue)}
+.tema-rosa .mensaje p{font-family:var(--f-body);font-size:17px;font-weight:500;line-height:1.45}
+.tema-rosa .mensaje p::before{content:"“";font-family:var(--f-guion);color:var(--rosa);font-size:40px;line-height:0;vertical-align:-.35em;margin-right:4px}
+.tema-rosa .fotos-top h2{font-family:var(--f-guion)!important;font-weight:400!important;font-size:40px!important;line-height:1;color:var(--hondo)}
+.tema-rosa .qr-fotos{border:1.5px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 10px 24px -16px rgba(78,52,66,.6)}
+.tema-rosa .galeria a{border:1.5px solid var(--line);border-radius:16px}
+.tema-rosa .mesa{border-color:var(--rosa);border-width:2px}
+.tema-rosa .mapa{border:1.5px solid var(--line);border-radius:18px}
+.tema-rosa .reg-top{background:linear-gradient(135deg,#C04F7A,#D9668F);color:#fff;border-radius:22px;box-shadow:0 14px 28px -18px rgba(192,79,122,.9)}
+.tema-rosa .reg-top b{font-family:var(--f-nombre)}
+.tema-rosa .reg-top .btn{background:#fff;color:var(--hondo);border-color:#fff}
+.tema-rosa .guardar{background:var(--ink);border-radius:999px}
+.tema-rosa .guardar .btn{background:#fff;color:var(--hondo);border-color:#fff}
+.tema-rosa .hoja h3{font-family:var(--f-nombre);color:var(--hondo)}
+.tema-rosa .contador output{font-family:var(--f-nombre)}
+.tema-rosa .contador button{border:1.5px solid #F2BCCF;color:var(--hondo);background:#fff}
+.tema-rosa .error h2{color:var(--hondo)}
+.tema-rosa .lnk{color:var(--hondo)}
+.tema-rosa :focus-visible{outline:3px solid var(--hondo);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.tema-rosa .cielo img,.tema-rosa .t-dino{animation:none!important}}
 </style>
 
 </head>
 <body>
 <header class="top">
+  <div class="cielo" aria-hidden="true">
+    <img class="nube" src="/mesa/arte/nube.webp" alt="">
+    <img class="nube n2" src="/mesa/arte/nube.webp" alt="">
+    <img class="mariposa" src="/mesa/arte/mariposa.webp" alt="">
+    <img class="mariposa m2" src="/mesa/arte/mariposa.webp" alt="">
+  </div>
   <div class="wrap">
     <div class="izq">
       <p class="marca">Aparta la Fecha · Panel de invitados</p>
+      <p class="t-pre" id="t-pre"></p>
       <h1 id="titulo">Cargando…</h1>
       <div class="meta"><span id="cuando-evento"></span><span id="actualizado">Conectando…</span><button type="button" id="recargar">Actualizar</button></div>
     </div>
-    <div class="faltan" id="faltan" hidden><small>Faltan</small><b class="num" id="faltan-n">0</b><small id="faltan-u">días</small></div>
+    <div class="der"><img class="t-dino" src="/mesa/arte/dino.webp" width="240" height="300" alt=""><div class="faltan" id="faltan" hidden><small>Faltan</small><b class="num" id="faltan-n">0</b><small id="faltan-u">días</small></div></div>
   </div>
 </header>
 <div class="aviso" id="demo" hidden><div class="wrap">Vista de ejemplo con datos ficticios. El panel real de cada evento se abre con su link privado.</div></div>
@@ -512,6 +625,7 @@ function pintar() {
   const ev = D.evento || {};
   document.title = (ev.nombre || "Evento") + " · Panel de invitados";
   $("titulo").textContent = ev.nombre || "Panel de invitados";
+  if (window.AF_TEMA) { $("t-pre").textContent = AF_TEMA.pre; $("titulo").textContent = AF_TEMA.nombre; }
   const fe = ev.fecha ? new Date(ev.fecha) : null;
   $("cuando-evento").textContent = fe && !isNaN(fe) ? fe.toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" }) + ", " + hora(ev.fecha) + (ev.lugar ? " · " + ev.lugar : "") : "";
   if (fe && !isNaN(fe)) {
@@ -561,7 +675,7 @@ function pintarResumen(resp) {
   const R = 15.915, circ = 100;
   $("dona").innerHTML = `<circle cx="21" cy="21" r="${R}" fill="none" stroke="${css("--line")}" stroke-width="5"/>` +
     (pct ? `<circle cx="21" cy="21" r="${R}" fill="none" stroke="${css("--clay")}" stroke-width="5" stroke-dasharray="${pct} ${circ - pct}" stroke-dashoffset="25" stroke-linecap="round"/>` : "") +
-    `<text x="21" y="23.5" text-anchor="middle" font-size="8" font-weight="600" fill="${css("--ink")}" font-family="Jost, sans-serif">${pct}%</text>`;
+    `<text x="21" y="23.5" text-anchor="middle" font-size="8" font-weight="600" fill="${css("--ink")}" font-family="${css("--f-body").replace(/"/g, "'")}">${pct}%</text>`;
   $("dona").setAttribute("aria-label", "Ocupación " + pct + "%");
   $("mesas-txt").innerHTML = `${ocu} <small>de ${cap} lugares</small>`;
   const sinMesa = lista.filter(f => !f.mesa && ocupa(f, resp) > 0);
@@ -791,7 +905,7 @@ function pintarFotos() {
   $("abrir-carpeta").hidden = !D.evento.carpeta; if (D.evento.carpeta) $("abrir-carpeta").href = D.evento.carpeta;
   if (on && qrHecho !== url) {
     $("qr-fotos").innerHTML = "";
-    try { new QRCode($("qr-fotos"), { text: url, width: 600, height: 600, colorDark: "#2F3A2E", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M }); qrHecho = url; }
+    try { new QRCode($("qr-fotos"), { text: url, width: 600, height: 600, colorDark: (window.AF_TEMA && AF_TEMA.qr) || "#2F3A2E", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M }); qrHecho = url; }
     catch (x) { $("qr-fotos").textContent = "QR no disponible"; }
   }
   const fs = [...(D.fotos || [])].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
