@@ -1,0 +1,28 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aparta la Fecha//Invitaciones//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:rush-15-20261115@apartalafecha.github.io
+DTSTAMP:20261105T220000Z
+DTSTART:20261115T170000Z
+DTEND:20261115T210000Z
+SUMMARY:Los XV de Rush 🐾
+LOCATION:Benji & Lola - Cielo Abierto\, Av. Miguel Ángel de Quevedo 247\, 
+ Romero de Terreros\, Coyoacán\, 04310 CDMX
+DESCRIPTION:¡Ven a celebrar los XV años de Rush! De 11:00 a.m. a 3:00 p.m
+ .\nCódigo de vestimenta perruno: un accesorio rosa.\nRecuerda: vacunas y 
+ desparasitación al día y correa para entrar y salir.\nUbicación: https:
+ //www.google.com/maps/search/?api=1&query=Benji%20%26%20Lola%20-%20Cielo%2
+ 0Abierto%2C%20Av.%20Miguel%20%C3%81ngel%20de%20Quevedo%20247%2C%20Coyoac%C
+ 3%A1n%2C%20CDMX&query_place_id=ChIJuwrYCwD_0YURQDWrqdUDjBw\nInvitación: h
+ ttps://apartalafecha.github.io/rush-15/
+URL:https://apartalafecha.github.io/rush-15/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana son los XV de Rush 🐾
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR
