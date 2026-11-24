@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aparta la Fecha//Invitaciones//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:ninfa-y-pavel-20270131@apartalafecha.github.io
+DTSTAMP:20261121T231356Z
+DTSTART:20270131T213000Z
+DTEND:20270201T060000Z
+SUMMARY:Boda de Ninfa & Pavel
+LOCATION:Jazzy Eventos\, Av. San Pablo Aguilar 32\, San Cristóbal Tepontla
+ \, 72765 San Pedro Cholula\, Pue.
+GEO:19.0755644;-98.3262993
+DESCRIPTION:¡Nos casamos!\n3:30 p.m. Bienvenida y ubicación de lugares\n4
+ :00 p.m. Ceremonia civil\n5:00 p.m. Cóctel y fotografías\n6:00 p.m. Cena
+  buffet\n7:00 p.m. Apertura de pista de baile\n12:00 a.m. Despedida\nCódi
+ go de vestimenta: formal.\nUbicación: https://maps.app.goo.gl/WjHr1ZBb8K7
+ RV8iH8\nInvitación: https://apartalafecha.github.io/ninfa-y-pavel/
+URL:https://apartalafecha.github.io/ninfa-y-pavel/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana es la boda de Ninfa & Pavel
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR
