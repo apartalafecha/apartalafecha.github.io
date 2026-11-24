@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aparta la Fecha//Invitaciones//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:itiel-y-areli-20270410@apartalafecha.github.io
+DTSTAMP:20261121T170000Z
+DTSTART;VALUE=DATE:20270410
+DTEND;VALUE=DATE:20270411
+SUMMARY:Boda de Itiel & Areli
+LOCATION:Salón Jardín El Relicario\, Atlixco\, Puebla
+DESCRIPTION:¡Nos casamos! Te esperamos en el Salón Jardín El Relicario\,
+  Atlixco\, Puebla.\nInvitación: https://apartalafecha.github.io/itiel-y-a
+ reli/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana es la boda de Itiel & Areli
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

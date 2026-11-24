@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Itiel &amp; Areli · Nos casamos</title>
+<meta name="description" content="Sábado 10 de abril de 2027 · Salón Jardín El Relicario, Atlixco, Puebla">
+<meta name="theme-color" content="#F7F1E8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Itiel &amp; Areli · Nos casamos">
+<meta property="og:description" content="Sábado 10 de abril de 2027 · Salón Jardín El Relicario, Atlixco, Puebla">
+<meta property="og:url" content="https://apartalafecha.github.io/itiel-y-areli/">
+<meta property="og:image" content="https://apartalafecha.github.io/itiel-y-areli/portada.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<!--FUENTES-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Allura&display=swap" rel="stylesheet">
+<!--/FUENTES-->
+<style>
+:root{
+  --cacao:#6F4E37;      /* paleta de la novia: Mocha Mousse & Champagne */
+  --mocha:#A68F7B;
+  --champagne:#EADFCF;
+  --arena:#D8C7B2;
+  --oro:#C2A77D;
+  --oro-hondo:#9C7F52;
+  --papel:#F7F1E8;
+  --tarjeta:#FBF8F3;
+  --tinta:#4A3628;
+  --suave:#7E6A5A;
+  --linea:#E2D6C5;
+  --script:"Allura",cursive;
+  --serif:"Cormorant Garamond",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--papel);-webkit-text-size-adjust:100%}
+body{font-family:var(--serif);color:var(--tinta);font-size:19px;line-height:1.55;overflow-x:hidden;font-variant-numeric:lining-nums;
+  background:
+    radial-gradient(1200px 600px at 10% -10%,rgba(234,223,207,.55),transparent 60%),
+    radial-gradient(900px 700px at 110% 30%,rgba(216,199,178,.28),transparent 60%),
+    radial-gradient(900px 700px at -20% 80%,rgba(234,223,207,.45),transparent 60%),
+    var(--papel)}
+body.cerrado{overflow:hidden;height:100vh}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Monograma ---------- */
+.mono{position:relative;display:block;width:var(--m,200px);height:calc(var(--m,200px)*.92);margin:0 auto;color:var(--oro)}
+.mono span{position:absolute;font-family:var(--script);line-height:1;font-size:calc(var(--m,200px)*.78)}
+.mono .l1{left:16%;top:-2%}
+.mono .l2{left:33%;top:17%}
+.caps{font-family:var(--serif);font-weight:500;letter-spacing:.32em;text-transform:uppercase;padding-left:.32em}
+
+/* ---------- Sobre ---------- */
+#sobre{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  padding:max(24px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));
+  background:radial-gradient(800px 500px at 50% 0%,#FCF9F4,transparent 70%),var(--papel);text-align:center;transition:opacity .9s ease,visibility .9s}
+#sobre.fuera{opacity:0;visibility:hidden}
+#sobre .mono{--m:min(46vw,190px)}
+#sobre .quien{font-size:18px;letter-spacing:.1em;color:#C2AC88;margin-top:2px;padding-left:.1em}
+#sobre .toca{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#5C4B3F;max-width:330px;line-height:1.5;font-weight:500}
+#sobre .fecha-s{font-size:25px;letter-spacing:.06em;color:#C2AC88;font-weight:500}
+.env{position:relative;width:min(94vw,440px);aspect-ratio:3/2;perspective:1300px;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;
+  filter:drop-shadow(0 14px 22px rgba(111,78,55,.16)) drop-shadow(0 2px 3px rgba(111,78,55,.12))}
+.env:focus-visible{outline:3px solid rgba(194,167,125,.55);outline-offset:4px}
+.env svg{display:block;width:100%;height:100%}
+.env .atras,.env .frente{position:absolute;inset:0}
+.env .atras{z-index:1}
+.env .frente{z-index:3}
+.env .carta{position:absolute;left:5%;right:5%;top:5%;height:90%;border-radius:2px;background:linear-gradient(#FDFBF7,#F5EEE3);
+  box-shadow:0 1px 3px rgba(111,78,55,.15);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:2;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+#sobre .env .carta .mono{--m:92px}
+.env .carta .caps{font-size:11px;color:var(--mocha)}
+.env .solapa{position:absolute;left:0;right:0;top:0;height:62%;z-index:4;transform-origin:50% 0;
+  transition:transform .8s cubic-bezier(.4,.1,.3,1);filter:drop-shadow(0 3px 4px rgba(111,78,55,.26))}
+.env .sello{position:absolute;left:50%;top:56%;width:24%;aspect-ratio:1;z-index:5;transform:translate(-50%,-50%);
+  filter:drop-shadow(0 2.5px 2.5px rgba(80,55,30,.32)) drop-shadow(0 1px 1px rgba(80,55,30,.22));transition:transform .45s ease,opacity .45s ease}
+.env .sello svg{overflow:visible}
+.env.abre .sello{transform:translate(-50%,-50%) scale(1.25);opacity:0}
+.env.abre .solapa{transform:rotateX(180deg)}
+.env.saca .solapa{z-index:1}
+.env.saca .carta{transform:translateY(-58%)}
+@media (hover:hover){.env:hover .sello{transform:translate(-50%,-50%) scale(1.05)}}
+
+/* ---------- Página ---------- */
+main{max-width:520px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left)) 40px max(18px,env(safe-area-inset-right))}
+section{position:relative;text-align:center;padding:56px 6px}
+.hoja{background:var(--tarjeta);border:1px solid var(--linea);border-radius:22px;padding:44px 22px;margin:18px 0;box-shadow:0 14px 34px rgba(111,78,55,.07)}
+.titulo{font-family:var(--script);font-weight:400;color:var(--cacao);font-size:50px;line-height:1.1;margin-bottom:14px}
+.sub{font-size:13px;color:var(--mocha);margin-bottom:6px}
+.orn{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px auto;color:var(--oro)}
+.orn::before,.orn::after{content:"";height:1px;width:70px;background:linear-gradient(90deg,transparent,var(--oro))}
+.orn::after{transform:scaleX(-1)}
+.orn svg{width:16px;height:16px}
+.texto{font-size:20px;color:var(--suave);max-width:400px;margin:0 auto}
+.rama{position:absolute;pointer-events:none;color:var(--mocha);opacity:.55}
+
+/* Portada */
+.portada{overflow:hidden;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:70px;padding-bottom:70px}
+.portada .mono{--m:min(64vw,250px)}
+.portada .pre{font-size:15px;color:var(--mocha);margin:6px 0 2px}
+.portada .nombres{font-family:var(--script);font-size:clamp(54px,15vw,74px);line-height:1.25;color:var(--cacao)}
+.portada .nombres .y{font-size:.55em;color:var(--oro);margin:0 .18em;vertical-align:.15em;margin:0 .3em}
+.portada .fecha-p{display:flex;align-items:center;justify-content:center;gap:16px;font-size:22px;letter-spacing:.22em;color:var(--tinta);margin-top:10px}
+.portada .fecha-p i{display:block;width:1px;height:26px;background:var(--oro)}
+.portada .lugar-p{margin-top:8px;font-size:17px;font-style:italic;color:var(--suave)}
+.arco{width:min(74vw,300px);aspect-ratio:4/5;margin:6px auto 22px;padding:8px;background:#fff;border-radius:999px 999px 6px 6px;box-shadow:0 16px 36px rgba(111,78,55,.16)}
+.arco img{width:100%;height:100%;object-fit:cover;border-radius:999px 999px 3px 3px}
+.r1{top:8px;left:-24px;width:150px;transform:rotate(-12deg)}
+.r2{bottom:10px;right:-22px;width:150px;transform:rotate(168deg)}
+.baja{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--mocha);display:flex;flex-direction:column;align-items:center;gap:6px}
+.baja svg{animation:bota 2.2s ease-in-out infinite}
+@keyframes bota{50%{transform:translateY(5px)}}
+
+/* Padres */
+.padres{display:grid;gap:26px;margin-top:22px}
+.padres h3{font-size:12px;color:var(--oro-hondo);margin-bottom:6px}
+.padres p{font-size:21px;line-height:1.45;color:var(--tinta)}
+
+/* Fecha y contador */
+.fecha-g{display:flex;align-items:center;justify-content:center;gap:18px;margin:10px 0 8px}
+.fecha-g .lado{font-size:14px;color:var(--suave);border-top:1px solid var(--oro);border-bottom:1px solid var(--oro);padding:8px 4px;min-width:96px}
+.fecha-g .dia{font-size:78px;line-height:1;color:var(--cacao);font-weight:500}
+.hora{font-size:17px;font-style:italic;color:var(--suave)}
+.contador{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:380px;margin:26px auto 0}
+.contador div{background:var(--champagne);border-radius:16px;padding:14px 4px 10px}
+.contador b{display:block;font-size:34px;font-weight:500;line-height:1;color:var(--cacao);font-variant-numeric:tabular-nums lining-nums}
+.contador span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--suave)}
+
+/* Botones */
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:0 24px;border-radius:999px;
+  font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:.06em;text-decoration:none;transition:transform .15s,background .2s}
+.btn:active{transform:scale(.97)}
+.btn svg{width:19px;height:19px;flex:none}
+.prim{background:var(--cacao);color:#FBF6EE;box-shadow:0 8px 18px rgba(111,78,55,.22)}
+.sec{border:1.5px solid var(--mocha);color:var(--cacao);background:rgba(255,255,255,.6)}
+.cal{position:relative;display:inline-block}
+.menu{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);min-width:210px;background:#fff;border:1px solid var(--linea);border-radius:16px;
+  box-shadow:0 14px 30px rgba(111,78,55,.18);padding:6px;display:none;z-index:5;text-align:left}
+.menu.on{display:block}
+.menu a{display:block;padding:11px 14px;border-radius:10px;text-decoration:none;font-size:17px;font-weight:500}
+.menu a:hover{background:var(--champagne)}
+.lugar-n{font-size:27px;font-weight:500;color:var(--tinta);line-height:1.25}
+.lugar-c{font-size:18px;color:var(--suave);margin-top:4px}
+
+/* Listas opcionales (itinerario, vestimenta, regalos, galería) */
+.itin{list-style:none;max-width:340px;margin:22px auto 0;text-align:left;position:relative}
+.itin::before{content:"";position:absolute;left:70px;top:8px;bottom:8px;width:1px;background:var(--arena)}
+.itin li{display:grid;grid-template-columns:62px 1fr;gap:22px;align-items:center;padding:10px 0;position:relative}
+.itin li::after{content:"";position:absolute;left:66px;width:9px;height:9px;border-radius:50%;background:var(--oro);top:50%;margin-top:-4.5px}
+.itin time{font-size:17px;font-weight:600;color:var(--cacao);text-align:right}
+.itin span{font-size:19px}
+.regalos{display:grid;gap:12px;margin-top:20px}
+.regalo{border:1px solid var(--linea);border-radius:16px;padding:16px;background:#fff}
+.regalo b{display:block;font-size:20px;font-weight:600}
+.regalo small{display:block;font-size:16px;color:var(--suave);margin:2px 0 10px}
+.galeria{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 14px;margin-top:16px;scrollbar-width:none}
+.galeria::-webkit-scrollbar{display:none}
+.galeria img{flex:0 0 78%;aspect-ratio:4/5;object-fit:cover;border-radius:18px;scroll-snap-align:center}
+
+/* Confirmación */
+form{max-width:380px;margin:20px auto 0;text-align:left;display:grid;gap:16px}
+label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--suave);margin-bottom:6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:18px;color:var(--tinta);background:#fff;border:1px solid var(--arena);border-radius:14px;padding:12px 14px;outline:none}
+input[type=text]:focus,textarea:focus{border-color:var(--mocha);box-shadow:0 0 0 3px rgba(194,167,125,.25)}
+textarea{min-height:88px;resize:vertical}
+.opc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opc button{min-height:50px;border:1.5px solid var(--arena);border-radius:999px;background:#fff;font-size:17px;font-weight:600}
+.opc button[aria-pressed=true]{background:var(--cacao);border-color:var(--cacao);color:#FBF6EE}
+.paso{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--arena);border-radius:999px;padding:5px}
+.paso button{width:42px;height:42px;border-radius:50%;background:var(--champagne);font-size:24px;line-height:1;color:var(--cacao)}
+.paso output{font-size:22px;font-weight:600;color:var(--cacao)}
+.aviso{font-size:15px;color:#9A4B3A;min-height:1px}
+form .prim{width:100%;margin-top:4px}
+.limite{font-size:18px;font-style:italic;color:var(--suave)}
+
+/* Pie */
+footer{text-align:center;padding:46px 20px max(40px,env(safe-area-inset-bottom))}
+footer .mono{--m:96px}
+footer .firma{font-family:var(--script);font-size:40px;color:var(--cacao);margin-top:4px}
+footer .con{font-size:17px;font-style:italic;color:var(--suave)}
+footer .credito{margin-top:26px;font-size:14px;color:var(--mocha)}
+footer .credito a{text-decoration:none;border-bottom:1px solid rgba(166,143,123,.5)}
+footer .ig{display:inline-flex;margin-top:10px;color:var(--mocha)}
+footer .ig svg{width:20px;height:20px}
+
+/* Música */
+#musica{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:20;width:50px;height:50px;border-radius:50%;
+  background:var(--cacao);color:#FBF6EE;display:none;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(111,78,55,.3)}
+#musica.on{display:flex}
+#musica svg{width:22px;height:22px}
+
+/* Hojas que caen */
+.caen{position:fixed;inset:0;pointer-events:none;z-index:15;overflow:hidden}
+.caen i{position:absolute;top:-30px;width:14px;height:22px;opacity:0;animation:cae linear infinite}
+.caen i svg{width:100%;height:100%}
+@keyframes cae{0%{transform:translate3d(0,-20px,0) rotate(0);opacity:0}10%{opacity:.75}90%{opacity:.6}100%{transform:translate3d(var(--dx,40px),105vh,0) rotate(var(--rot,240deg));opacity:0}}
+
+/* Aparición */
+.ap{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+.ap.vis{opacity:1;transform:none}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .ap{opacity:1;transform:none}
+  .caen{display:none}
+}
+</style>
+</head>
+<body class="cerrado">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="rama" viewBox="0 0 160 240">
+      <g fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 236 C 46 180, 66 120, 128 14"/>
+        <g id="hoja"><path d="M0 0 C 9 -11 27 -11 38 0 C 27 11 9 11 0 0Z"/><path d="M2 0 H 33"/></g>
+        <use href="#hoja" transform="translate(39 196) rotate(-30)"/>
+        <use href="#hoja" transform="translate(42 186) rotate(-128) scale(.95)"/>
+        <use href="#hoja" transform="translate(56 150) rotate(-38) scale(.92)"/>
+        <use href="#hoja" transform="translate(59 140) rotate(-138) scale(.9)"/>
+        <use href="#hoja" transform="translate(75 106) rotate(-44) scale(.85)"/>
+        <use href="#hoja" transform="translate(79 96) rotate(-146) scale(.82)"/>
+        <use href="#hoja" transform="translate(97 66) rotate(-52) scale(.74)"/>
+        <use href="#hoja" transform="translate(102 58) rotate(-150) scale(.7)"/>
+        <use href="#hoja" transform="translate(116 34) rotate(-62) scale(.6)"/>
+      </g>
+    </symbol>
+    <symbol id="hojita" viewBox="0 0 14 22"><path d="M7 1 C 13 7 13 15 7 21 C 1 15 1 7 7 1Z" fill="currentColor"/><path d="M7 3 V 20" stroke="rgba(255,255,255,.45)" stroke-width=".8"/></symbol>
+    <symbol id="rombo" viewBox="0 0 16 16"><path d="M8 1 L 11 8 L 8 15 L 5 8 Z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ SOBRE ============ -->
+<div id="sobre" role="dialog" aria-label="Invitación de boda de Itiel y Areli">
+  <span class="mono" aria-hidden="true"><span class="l1">I</span><span class="l2">A</span></span>
+  <p class="caps quien">Itiel &amp; Areli</p>
+  <p class="toca">“Toca el sobre para abrir la invitación digital”</p>
+  <div class="env" id="env" role="button" tabindex="0" aria-label="Abrir la invitación">
+    <svg class="atras" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="ruido" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="3" seed="3" stitchTiles="stitch"/>
+          <feColorMatrix values="0 0 0 0 .40  0 0 0 0 .29  0 0 0 0 .19  0 0 0 .10 0"/></filter>
+        <pattern id="grano" width="90" height="90" patternUnits="userSpaceOnUse"><rect width="90" height="90" filter="url(#ruido)"/></pattern>
+        <linearGradient id="g-atras" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CDBEA7"/><stop offset="1" stop-color="#C6B59D"/></linearGradient>
+        <linearGradient id="g-frente" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDD0BD"/><stop offset="1" stop-color="#D6C8B3"/></linearGradient>
+        <linearGradient id="g-lado" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D9CCB8"/><stop offset="1" stop-color="#DFD3C1"/></linearGradient>
+        <linearGradient id="g-lado2" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#D9CCB8"/><stop offset="1" stop-color="#DFD3C1"/></linearGradient>
+        <linearGradient id="g-solapa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2D6C4"/><stop offset="1" stop-color="#DBCDB8"/></linearGradient>
+      </defs>
+      <rect width="300" height="200" rx="1.5" fill="url(#g-atras)"/>
+      <rect width="300" height="200" rx="1.5" fill="url(#grano)"/>
+    </svg>
+    <div class="carta"><span class="mono" aria-hidden="true"><span class="l1">I</span><span class="l2">A</span></span><span class="caps">Nos casamos</span></div>
+    <svg class="frente" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true">
+      <!-- solapas laterales -->
+      <path d="M0 0 L150 112 L0 158 Z" fill="url(#g-lado)"/>
+      <path d="M300 0 L150 112 L300 158 Z" fill="url(#g-lado2)"/>
+      <!-- bolsa inferior -->
+      <path d="M0 158 L95 41 L205 41 L300 158 L300 200 L0 200 Z" fill="url(#g-frente)"/>
+      <path d="M0 0 L150 112 L300 0 L300 200 L0 200 Z" fill="url(#grano)"/>
+      <!-- dobleces -->
+      <path d="M0 158 L95 41 M300 158 L205 41" fill="none" stroke="#B9A588" stroke-opacity=".5" stroke-width=".6"/>
+      <path d="M.8 158.4 L95.6 41.6 M299.2 158.4 L204.4 41.6" fill="none" stroke="#F4ECE0" stroke-opacity=".6" stroke-width=".5"/>
+      <rect y="198.6" width="300" height="1.4" fill="#B8A487" fill-opacity=".55"/>
+    </svg>
+    <div class="solapa"><svg viewBox="0 0 300 124" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 7 Q0 0 7 0 H293 Q300 0 300 7 L162 114.5 Q150 123.5 138 114.5 Z" fill="url(#g-solapa)"/>
+      <path d="M0 7 Q0 0 7 0 H293 Q300 0 300 7 L162 114.5 Q150 123.5 138 114.5 Z" fill="url(#grano)"/>
+      <path d="M2 8 L138.6 113.6 M298 8 L161.4 113.6" fill="none" stroke="#F3EBDF" stroke-opacity=".5" stroke-width=".5"/>
+    </svg></div>
+    <div class="sello"><svg viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <radialGradient id="cera" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#F0E0BC"/><stop offset=".4" stop-color="#D8BE8E"/><stop offset=".8" stop-color="#BA9B67"/><stop offset="1" stop-color="#977A4C"/></radialGradient>
+        <radialGradient id="cera2" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#E3CC9E"/><stop offset="1" stop-color="#C2A470"/></radialGradient>
+        <filter id="borde" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter>
+        <filter id="domo" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/>
+          <feSpecularLighting in="b" surfaceScale="5" specularConstant=".7" specularExponent="22" lighting-color="#FFF6E2" result="s"><feDistantLight azimuth="225" elevation="50"/></feSpecularLighting>
+          <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".5" k4="0"/></filter>
+        <filter id="relieve" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur in="SourceAlpha" stdDeviation=".7" result="b"/>
+          <feSpecularLighting in="b" surfaceScale="2" specularConstant="1" specularExponent="16" lighting-color="#FFF2D4" result="s"><feDistantLight azimuth="225" elevation="40"/></feSpecularLighting>
+          <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".8" k4="0"/></filter>
+      </defs>
+      <g filter="url(#domo)"><path d="M91.97,50.00 L92.17,51.33 L92.08,52.65 L91.73,53.94 L91.21,55.21 L90.60,56.43 L90.01,57.63 L89.50,58.83 L89.06,60.03 L88.67,61.24 L88.26,62.43 L87.76,63.59 L87.12,64.69 L86.32,65.72 L85.40,66.66 L84.43,67.54 L83.51,68.42 L82.72,69.35 L82.11,70.38 L81.70,71.54 L81.43,72.83 L81.22,74.22 L80.97,75.62 L80.58,76.96 L79.99,78.16 L79.18,79.18 L78.17,80.00 L77.02,80.65 L75.81,81.20 L74.62,81.73 L73.48,82.31 L72.41,82.98 L71.41,83.74 L70.42,84.54 L69.42,85.32 L68.35,86.01 L67.21,86.56 L66.00,86.97 L64.76,87.27 L63.51,87.52 L62.29,87.83 L61.12,88.26 L59.98,88.86 L58.86,89.63 L57.73,90.50 L56.55,91.36 L55.32,92.08 L54.02,92.55 L52.69,92.71 L51.34,92.53 L50.00,92.06 L48.70,91.41 L47.44,90.69 L46.22,90.01 L45.02,89.45 L43.82,89.02 L42.62,88.71 L41.41,88.43 L40.21,88.11 L39.05,87.69 L37.93,87.14 L36.87,86.47 L35.85,85.74 L34.85,85.02 L33.81,84.40 L32.71,83.92 L31.53,83.60 L30.25,83.39 L28.93,83.20 L27.61,82.94 L26.38,82.51 L25.29,81.85 L24.39,80.96 L23.68,79.86 L23.11,78.63 L22.63,77.37 L22.14,76.16 L21.57,75.06 L20.87,74.10 L20.03,73.25 L19.09,72.46 L18.10,71.68 L17.14,70.85 L16.28,69.94 L15.54,68.95 L14.90,67.88 L14.32,66.79 L13.73,65.70 L13.06,64.63 L12.27,63.59 L11.36,62.55 L10.41,61.50 L9.49,60.40 L8.74,59.22 L8.24,57.97 L8.06,56.64 L8.20,55.28 L8.60,53.91 L9.16,52.57 L9.75,51.27 L10.24,50.00 L10.56,48.76 L10.70,47.53 L10.67,46.28 L10.57,45.02 L10.49,43.74 L10.51,42.47 L10.69,41.21 L11.04,40.00 L11.51,38.82 L12.02,37.66 L12.52,36.51 L12.93,35.32 L13.25,34.10 L13.50,32.83 L13.76,31.53 L14.11,30.27 L14.63,29.08 L15.39,28.03 L16.37,27.15 L17.55,26.42 L18.82,25.81 L20.09,25.26 L21.27,24.67 L22.29,23.98 L23.12,23.12 L23.81,22.11 L24.40,20.96 L24.98,19.75 L25.62,18.57 L26.37,17.47 L27.24,16.52 L28.23,15.70 L29.29,14.98 L30.38,14.32 L31.47,13.63 L32.53,12.88 L33.58,12.06 L34.64,11.21 L35.75,10.42 L36.93,9.76 L38.19,9.34 L39.52,9.19 L40.90,9.31 L42.30,9.64 L43.68,10.07 L45.01,10.48 L46.29,10.75 L47.53,10.82 L48.76,10.67 L50.00,10.34 L51.26,9.93 L52.54,9.56 L53.84,9.33 L55.14,9.31 L56.41,9.52 L57.64,9.93 L58.84,10.46 L60.01,11.02 L61.17,11.56 L62.34,12.02 L63.53,12.43 L64.72,12.83 L65.88,13.29 L66.99,13.90 L67.99,14.70 L68.87,15.68 L69.63,16.81 L70.30,18.00 L70.96,19.15 L71.67,20.17 L72.51,20.99 L73.50,21.60 L74.65,22.04 L75.93,22.38 L77.27,22.73 L78.58,23.16 L79.77,23.75 L80.81,24.51 L81.67,25.44 L82.39,26.47 L83.03,27.55 L83.65,28.64 L84.32,29.70 L85.06,30.73 L85.84,31.74 L86.62,32.77 L87.31,33.86 L87.84,35.02 L88.17,36.26 L88.31,37.55 L88.30,38.87 L88.24,40.18 L88.23,41.45 L88.38,42.68 L88.74,43.86 L89.31,45.03 L90.03,46.22 L90.80,47.43 L91.48,48.70Z" fill="url(#cera)" filter="url(#borde)"/></g>
+      <circle cx="50" cy="50" r="31" fill="none" stroke="#FFF1D3" stroke-opacity=".55" stroke-width="1.2"/>
+      <circle cx="50" cy="50" r="29.2" fill="url(#cera2)"/>
+      <circle cx="50" cy="50" r="29.2" fill="none" stroke="#86693F" stroke-opacity=".45" stroke-width="1.1"/>
+      <g font-family="Allura,cursive" font-size="40">
+        <g fill="#6A512E" fill-opacity=".55" transform="translate(.6 .9)"><text x="32" y="55">I</text><text x="42.5" y="65">A</text></g>
+        <g fill="#FAEDCD" fill-opacity=".6" transform="translate(-.5 -.7)"><text x="32" y="55">I</text><text x="42.5" y="65">A</text></g>
+        <g fill="#AD8F5A" filter="url(#relieve)"><text x="32" y="55">I</text><text x="42.5" y="65">A</text></g>
+      </g>
+    </svg></div>
+  </div>
+  <p class="fecha-s">10 ABRIL 2027</p>
+</div>
+
+<div class="caen" id="caen" aria-hidden="true"></div>
+
+<main>
+  <!-- PORTADA -->
+  <section class="portada" id="inicio">
+    <svg class="rama r1" viewBox="0 0 160 240" aria-hidden="true"><use href="#rama"/></svg>
+    <svg class="rama r2" viewBox="0 0 160 240" aria-hidden="true"><use href="#rama"/></svg>
+    <div class="arco" id="foto-portada" hidden><img alt="Itiel y Areli" src=""></div>
+    <span class="mono ap" id="mono-portada" aria-hidden="true"><span class="l1">I</span><span class="l2">A</span></span>
+    <p class="caps pre ap">Nos casamos</p>
+    <h1 class="nombres ap">Itiel<span class="y">&amp;</span>Areli</h1>
+    <p class="fecha-p ap"><span>10</span><i></i><span>04</span><i></i><span>27</span></p>
+    <p class="lugar-p ap">Atlixco, Puebla</p>
+    <div class="baja" aria-hidden="true"><span class="caps">Desliza</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></div>
+  </section>
+
+  <!-- PADRES -->
+  <section class="hoja ap">
+    <p class="texto" id="frase">Con la bendición de Dios y de nuestros padres, tenemos el honor de invitarte a celebrar el inicio de nuestra vida juntos.</p>
+    <div class="orn"><svg><use href="#rombo"/></svg></div>
+    <div class="padres">
+      <div><h3 class="caps">Padres de la novia</h3><p>Vicente Javier Meza Camacho<br>María del Rosario Solis Torres</p></div>
+      <div><h3 class="caps">Padres del novio</h3><p>Javier de Jesús Reyes<br>Alejandra Ramírez Salas</p></div>
+    </div>
+  </section>
+
+  <!-- FECHA -->
+  <section class="ap">
+    <h2 class="titulo">Reserva la fecha</h2>
+    <div class="fecha-g">
+      <div class="lado caps">Sábado</div>
+      <div class="dia">10</div>
+      <div class="lado caps">Abril 2027</div>
+    </div>
+    <p class="hora" id="hora">Hora por confirmar</p>
+    <div class="contador" id="contador" aria-label="Cuenta regresiva">
+      <div><b id="cd-d">0</b><span>Días</span></div>
+      <div><b id="cd-h">0</b><span>Horas</span></div>
+      <div><b id="cd-m">0</b><span>Min</span></div>
+      <div><b id="cd-s">0</b><span>Seg</span></div>
+    </div>
+  </section>
+
+  <!-- GALERÍA (se activa cuando lleguen las fotos) -->
+  <section class="ap" id="sec-galeria" hidden>
+    <h2 class="titulo">Nuestra historia</h2>
+    <div class="galeria" id="galeria"></div>
+  </section>
+
+  <!-- ITINERARIO (pendiente) -->
+  <section class="hoja ap" id="sec-itinerario" hidden>
+    <h2 class="titulo">Itinerario</h2>
+    <ul class="itin" id="itinerario"></ul>
+  </section>
+
+  <!-- LUGAR -->
+  <section class="hoja ap">
+    <h2 class="titulo">¿Dónde?</h2>
+    <p class="caps sub">Ceremonia y recepción</p>
+    <p class="lugar-n" id="lugar-n">Salón Jardín El Relicario</p>
+    <p class="lugar-c" id="lugar-c">Atlixco, Puebla</p>
+    <div class="btns">
+      <a class="btn prim" id="btn-maps" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        Cómo llegar</a>
+      <a class="btn sec" id="btn-waze" target="_blank" rel="noopener">Waze</a>
+    </div>
+    <div class="btns">
+      <div class="cal">
+        <button class="btn sec" id="btn-cal" type="button" aria-expanded="false" aria-controls="menu-cal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+          Agregar al calendario</button>
+        <div class="menu" id="menu-cal" role="menu">
+          <a role="menuitem" id="cal-google" target="_blank" rel="noopener">Google Calendar</a>
+          <a role="menuitem" id="cal-apple">Apple (iPhone)</a>
+          <a role="menuitem" id="cal-outlook" target="_blank" rel="noopener">Outlook</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VESTIMENTA (pendiente) -->
+  <section class="ap" id="sec-vestimenta" hidden>
+    <h2 class="titulo">Código de vestimenta</h2>
+    <p class="texto" id="vestimenta"></p>
+  </section>
+
+  <!-- MESA DE REGALOS (pendiente) -->
+  <section class="hoja ap" id="sec-regalos" hidden>
+    <h2 class="titulo">Mesa de regalos</h2>
+    <div class="regalos" id="regalos"></div>
+  </section>
+
+  <!-- CONFIRMACIÓN -->
+  <section class="hoja ap" id="confirmar">
+    <h2 class="titulo">Confirma tu asistencia</h2>
+    <p class="limite" id="limite">Te pedimos confirmar antes del 10 de marzo de 2027</p>
+    <form id="rsvp" novalidate>
+      <div><label for="nombre">Tu nombre</label><input type="text" id="nombre" autocomplete="name" maxlength="60" placeholder="Nombre y apellido"></div>
+      <div><label id="l-asiste">¿Nos acompañas?</label>
+        <div class="opc" role="group" aria-labelledby="l-asiste">
+          <button type="button" data-asiste="si" aria-pressed="true">Sí, ahí estaré</button>
+          <button type="button" data-asiste="no" aria-pressed="false">No podré ir</button>
+        </div></div>
+      <div id="bloque-personas"><label id="l-personas">Personas</label>
+        <div class="paso" role="group" aria-labelledby="l-personas">
+          <button type="button" data-paso="-1" aria-label="Menos">−</button>
+          <output id="personas" aria-live="polite">1</output>
+          <button type="button" data-paso="1" aria-label="Más">+</button>
+        </div></div>
+      <div><label for="mensaje">Mensaje para los novios (opcional)</label><textarea id="mensaje" maxlength="400" placeholder="Escríbeles unas palabras…"></textarea></div>
+      <p class="aviso" id="aviso" role="alert"></p>
+      <button class="btn prim" type="submit">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2a9.7 9.7 0 0 0-8.3 14.8L2.3 21.8l4.9-1.3A9.7 9.7 0 1 0 12 2.2zm0 17.7a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 19.9zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.5-.3z"/></svg>
+        Enviar por WhatsApp</button>
+    </form>
+  </section>
+</main>
+
+<footer class="ap">
+  <span class="mono" aria-hidden="true"><span class="l1">I</span><span class="l2">A</span></span>
+  <p class="con">Con mucho amor,</p>
+  <p class="firma">Itiel &amp; Areli</p>
+  <p class="credito"><a href="https://www.instagram.com/apartalafecha.mx/" target="_blank" rel="noopener">Invitación digital · Aparta la Fecha</a></p>
+  <a class="ig" href="https://www.instagram.com/apartalafecha.mx/" target="_blank" rel="noopener" aria-label="Instagram de Aparta la Fecha">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
+</footer>
+
+<button id="musica" type="button" aria-label="Pausar música" aria-pressed="true">
+  <svg viewBox="0 0 24 24" fill="currentColor" id="ico-pausa"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+  <svg viewBox="0 0 24 24" fill="currentColor" id="ico-play" hidden><path d="M8 5.5v13l11-6.5z"/></svg>
+</button>
+<audio id="audio" loop playsinline preload="auto"></audio>
+
+<script>
+(function(){
+"use strict";
+/* ===== Datos del evento (lo que falta se activa al llenarlo) ===== */
+var CFG = {
+  novios: "Itiel y Areli",
+  fecha: "2027-04-10",             // sábado 10 de abril de 2027
+  hora: "",                         // "17:00" cuando la confirmen
+  fechaTexto: "el sábado 10 de abril de 2027",
+  lugar: "Salón Jardín El Relicario",
+  ciudad: "Atlixco, Puebla",
+  maps: "https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n%20Jard%C3%ADn%20El%20Relicario%20Atlixco%20Puebla",
+  waze: "https://waze.com/ul?q=Sal%C3%B3n%20Jard%C3%ADn%20El%20Relicario%20Atlixco%20Puebla&navigate=yes",
+  ics: "https://apartalafecha.github.io/itiel-y-areli/itiel-y-areli.ics",
+  wa: "522229071882",
+  maxPersonas: 10,
+  audio: "cancion.m4a",             // «Amarte es un placer» (Luis Miguel), desde el inicio
+  portada: "",                      // foto de portada (data URI) cuando lleguen
+  fotos: [],                        // galería
+  itinerario: [],                   // [["5:00 p.m.","Ceremonia"], …]
+  vestimenta: "",
+  regalos: []                       // [{nombre, detalle, url}]
+};
+
+var $ = function(id){ return document.getElementById(id); };
+function el(tag, cls, txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+
+/* ----- Sobre ----- */
+var sobre=$("sobre"), env=$("env"), audio=$("audio"), btnM=$("musica"), abierto=false;
+if(CFG.audio){ audio.src=CFG.audio; }
+function tocar(){
+  if(!CFG.audio) return;
+  var p=audio.play();
+  if(p && p.catch){ p.catch(function(){
+    var reintento=function(){ audio.play().catch(function(){}); document.removeEventListener("pointerdown",reintento); document.removeEventListener("keydown",reintento); };
+    document.addEventListener("pointerdown",reintento); document.addEventListener("keydown",reintento);
+  }); }
+}
+function abrir(){
+  if(abierto) return; abierto=true;
+  tocar();
+  env.classList.add("abre");
+  setTimeout(function(){ env.classList.add("saca"); },800);
+  setTimeout(function(){ sobre.classList.add("fuera"); document.body.classList.remove("cerrado"); hojas(); revisar(); },2000);
+  setTimeout(function(){ sobre.hidden=true; },2900);
+}
+env.addEventListener("click",abrir);
+env.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); abrir(); }});
+
+btnM.addEventListener("click",function(){
+  if(audio.paused){ audio.play().catch(function(){}); } else { audio.pause(); }
+});
+audio.addEventListener("error",function(){ btnM.classList.remove("on"); });
+audio.addEventListener("play",function(){ btnM.classList.add("on"); $("ico-pausa").hidden=false; $("ico-play").hidden=true; btnM.setAttribute("aria-label","Pausar música"); btnM.setAttribute("aria-pressed","true"); });
+audio.addEventListener("pause",function(){ $("ico-pausa").hidden=true; $("ico-play").hidden=false; btnM.setAttribute("aria-label","Reproducir música"); btnM.setAttribute("aria-pressed","false"); });
+var pausadaPorOcultar=false;
+document.addEventListener("visibilitychange",function(){
+  if(!CFG.audio) return;
+  if(document.hidden){ if(!audio.paused){ audio.pause(); pausadaPorOcultar=true; } }
+  else if(pausadaPorOcultar){ pausadaPorOcultar=false; audio.play().catch(function(){}); }
+});
+
+/* ----- Hojitas que caen ----- */
+function hojas(){
+  if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var c=$("caen"), colores=["#C2A77D","#A68F7B","#D8C7B2"];
+  for(var i=0;i<12;i++){
+    var h=el("i"); h.innerHTML='<svg viewBox="0 0 14 22"><use href="#hojita"/></svg>';
+    h.style.left=(Math.random()*100)+"%";
+    h.style.color=colores[i%3];
+    h.style.animationDuration=(11+Math.random()*9)+"s";
+    h.style.animationDelay=(Math.random()*12)+"s";
+    h.style.setProperty("--dx",(Math.random()*120-60)+"px");
+    h.style.setProperty("--rot",(Math.random()*360+120)+"deg");
+    var s=.6+Math.random()*.6; h.style.width=(14*s)+"px"; h.style.height=(22*s)+"px";
+    c.appendChild(h);
+  }
+}
+
+/* ----- Aparición al hacer scroll ----- */
+var aps=[].slice.call(document.querySelectorAll(".ap"));
+var io=("IntersectionObserver" in window)? new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("vis"); io.unobserve(e.target); } });
+},{rootMargin:"0px 0px -8% 0px"}) : null;
+function revisar(){ aps.forEach(function(a){ if(io) io.observe(a); else a.classList.add("vis"); }); }
+
+/* ----- Fecha, hora y cuenta regresiva ----- */
+var inicio=new Date(CFG.fecha+"T"+(CFG.hora||"00:00")+":00-06:00");
+if(CFG.hora){
+  var hh=+CFG.hora.split(":")[0], mm=CFG.hora.split(":")[1];
+  $("hora").textContent=((hh%12)||12)+":"+mm+" "+(hh<12?"a.m.":"p.m.");
+}
+function dos(n){ return (n<10?"0":"")+n; }
+function tic(){
+  var d=Math.max(0,inicio-new Date()), s=Math.floor(d/1000);
+  $("cd-d").textContent=Math.floor(s/86400);
+  $("cd-h").textContent=dos(Math.floor(s%86400/3600));
+  $("cd-m").textContent=dos(Math.floor(s%3600/60));
+  $("cd-s").textContent=dos(s%60);
+}
+tic(); setInterval(tic,1000);
+
+/* ----- Lugar y calendario ----- */
+$("btn-maps").href=CFG.maps;
+$("btn-waze").href=CFG.waze;
+var tituloCal="Boda de Itiel & Areli", lugarCal=CFG.lugar+", "+CFG.ciudad;
+var detalle="¡Nos casamos! Te esperamos en "+CFG.lugar+". Ubicación: "+CFG.maps;
+var enc=encodeURIComponent, dIni=CFG.fecha.replace(/-/g,"");
+var gDates, oIni, oFin, allday="";
+if(CFG.hora){
+  var ini=inicio, fin=new Date(inicio.getTime()+8*3600e3);
+  var z=function(t){ return t.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,""); };
+  gDates=z(ini)+"/"+z(fin); oIni=ini.toISOString(); oFin=fin.toISOString();
+}else{
+  var sig=new Date(Date.UTC(+dIni.slice(0,4),+dIni.slice(4,6)-1,+dIni.slice(6,8)+1));
+  var dFin=sig.toISOString().slice(0,10);
+  gDates=dIni+"/"+dFin.replace(/-/g,""); oIni=CFG.fecha; oFin=dFin; allday="&allday=true";
+}
+$("cal-google").href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+enc(tituloCal)+"&dates="+gDates+"&details="+enc(detalle)+"&location="+enc(lugarCal)+"&ctz=America/Mexico_City";
+$("cal-outlook").href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject="+enc(tituloCal)+"&startdt="+enc(oIni)+"&enddt="+enc(oFin)+allday+"&location="+enc(lugarCal)+"&body="+enc(detalle);
+$("cal-apple").href=CFG.ics;
+var bCal=$("btn-cal"), mCal=$("menu-cal");
+bCal.addEventListener("click",function(e){ e.stopPropagation(); var on=mCal.classList.toggle("on"); bCal.setAttribute("aria-expanded",on); });
+document.addEventListener("click",function(e){ if(!mCal.contains(e.target)){ mCal.classList.remove("on"); bCal.setAttribute("aria-expanded","false"); } });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ mCal.classList.remove("on"); bCal.setAttribute("aria-expanded","false"); } });
+
+/* ----- Secciones que se activan al tener datos ----- */
+if(CFG.portada){ var fp=$("foto-portada"); fp.querySelector("img").src=CFG.portada; fp.hidden=false; $("mono-portada").hidden=true; }
+if(CFG.fotos.length){ CFG.fotos.forEach(function(src,i){ var im=el("img"); im.src=src; im.alt="Itiel y Areli, foto "+(i+1); im.loading="lazy"; $("galeria").appendChild(im); }); $("sec-galeria").hidden=false; }
+if(CFG.itinerario.length){ CFG.itinerario.forEach(function(r){ var li=el("li"); li.appendChild(el("time",null,r[0])); li.appendChild(el("span",null,r[1])); $("itinerario").appendChild(li); }); $("sec-itinerario").hidden=false; }
+if(CFG.vestimenta){ $("vestimenta").textContent=CFG.vestimenta; $("sec-vestimenta").hidden=false; }
+if(CFG.regalos.length){ CFG.regalos.forEach(function(r){ var d=el("div","regalo"); d.appendChild(el("b",null,r.nombre)); if(r.detalle) d.appendChild(el("small",null,r.detalle)); if(r.url && /^https?:\/\//.test(r.url)){ var a=el("a","btn sec","Ver mesa"); a.href=r.url; a.target="_blank"; a.rel="noopener"; d.appendChild(a); } $("regalos").appendChild(d); }); $("sec-regalos").hidden=false; }
+
+/* ----- Confirmación por WhatsApp ----- */
+var asiste="si", personas=1;
+[].forEach.call(document.querySelectorAll("[data-asiste]"),function(b){
+  b.addEventListener("click",function(){
+    asiste=b.getAttribute("data-asiste");
+    [].forEach.call(document.querySelectorAll("[data-asiste]"),function(x){ x.setAttribute("aria-pressed",String(x===b)); });
+    $("bloque-personas").hidden=(asiste==="no");
+  });
+});
+[].forEach.call(document.querySelectorAll("[data-paso]"),function(b){
+  b.addEventListener("click",function(){
+    personas=Math.min(CFG.maxPersonas,Math.max(1,personas+ +b.getAttribute("data-paso")));
+    $("personas").textContent=personas;
+  });
+});
+$("rsvp").addEventListener("submit",function(e){
+  e.preventDefault();
+  var nombre=$("nombre").value.trim(), msg=$("mensaje").value.trim();
+  if(!nombre){ $("aviso").textContent="Escribe tu nombre para que los novios sepan quién confirma."; $("nombre").focus(); return; }
+  $("aviso").textContent="";
+  var t;
+  if(asiste==="si"){
+    t="¡Hola, "+CFG.novios+"! 💍 Soy "+nombre+".\n\nConfirmo mi asistencia a su boda "+CFG.fechaTexto+".\nAsistiremos: "+personas+(personas===1?" persona":" personas")+".";
+  }else{
+    t="¡Hola, "+CFG.novios+"! Soy "+nombre+".\n\nMuchas gracias por la invitación. Lamentablemente no podré acompañarlos "+CFG.fechaTexto+", pero les mando un abrazo enorme. 🤍";
+  }
+  if(msg) t+="\n\nMensaje: "+msg;
+  window.open("https://wa.me/"+CFG.wa+"?text="+encodeURIComponent(t),"_blank","noopener");
+});
+})();
+</script>
+</body>
+</html>
